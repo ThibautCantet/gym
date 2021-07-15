@@ -3,15 +3,19 @@ package com.gym.domain.subscription;
 public class SubscriptionPlan {
     private final BasePrice basePrice;
     private final Period period;
-    private final Double discountRate;
-    private TotalPrice totalPrice;
+    private final DiscountRate discountRate;
+    private final TotalPrice totalPrice;
 
     public SubscriptionPlan(BasePrice basePrice, Period period) {
         this.basePrice = basePrice;
         this.period = period;
-        this.discountRate = period.equals(Period.Montly) ? 0d: 10d;
-        this.totalPrice = new TotalPrice(basePrice.amount());
-        this.totalPrice = this.totalPrice.applyDiscount(discountRate);
+        this.discountRate = new DiscountRate(period);
+        this.totalPrice = initializeTotalPrice(basePrice);
+    }
+
+    private TotalPrice initializeTotalPrice(BasePrice basePrice) {
+        final TotalPrice totalPrice = new TotalPrice(basePrice.amount());
+        return totalPrice.applyDiscount(discountRate);
     }
 
     public BasePrice getBasePrice() {
@@ -22,7 +26,7 @@ public class SubscriptionPlan {
         return period;
     }
 
-    public Double getDiscountRate() {
+    public DiscountRate getDiscountRate() {
         return discountRate;
     }
 
