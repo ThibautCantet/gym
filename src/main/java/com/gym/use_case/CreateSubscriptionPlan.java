@@ -1,18 +1,19 @@
 package com.gym.use_case;
 
-import com.gym.domain.subscription.SubscriptionPlanRepository;
-import com.gym.domain.subscription.BasePrice;
-import com.gym.domain.subscription.Period;
-import com.gym.domain.subscription.SubscriptionPlan;
+import com.gym.domain.subscription.SubscriptionPlanIdGenerator;
+import com.gym.domain.subscription.*;
 
 public class CreateSubscriptionPlan {
+    private final SubscriptionPlanIdGenerator subscriptionPlanIdGenerator;
     private final SubscriptionPlanRepository subscriptionPlanRepository;
 
-    public CreateSubscriptionPlan(SubscriptionPlanRepository subscriptionPlanRepository) {
+    public CreateSubscriptionPlan(SubscriptionPlanIdGenerator subscriptionPlanIdGenerator, SubscriptionPlanRepository subscriptionPlanRepository) {
+        this.subscriptionPlanIdGenerator = subscriptionPlanIdGenerator;
         this.subscriptionPlanRepository = subscriptionPlanRepository;
     }
 
     public void execute(BasePrice basePrice, Period period) {
-        subscriptionPlanRepository.save(new SubscriptionPlan(basePrice, period));
+        final SubscriptionPlanId subscriptionPlanId = subscriptionPlanIdGenerator.next();
+        subscriptionPlanRepository.save(new SubscriptionPlan(subscriptionPlanId, basePrice, period));
     }
 }

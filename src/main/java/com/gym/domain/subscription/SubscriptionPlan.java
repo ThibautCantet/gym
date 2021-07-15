@@ -1,12 +1,14 @@
 package com.gym.domain.subscription;
 
 public class SubscriptionPlan {
+    private final SubscriptionPlanId id;
     private final BasePrice basePrice;
     private final Period period;
     private final DiscountRate discountRate;
     private final TotalPrice totalPrice;
 
-    public SubscriptionPlan(BasePrice basePrice, Period period) {
+    public SubscriptionPlan(SubscriptionPlanId subscriptionPlanId, BasePrice basePrice, Period period) {
+        this.id = subscriptionPlanId;
         this.basePrice = basePrice;
         this.period = period;
         this.discountRate = new DiscountRate(period);
@@ -16,6 +18,10 @@ public class SubscriptionPlan {
     private TotalPrice initializeTotalPrice(BasePrice basePrice) {
         final TotalPrice totalPrice = new TotalPrice(basePrice.amount());
         return totalPrice.applyDiscount(discountRate);
+    }
+
+    public SubscriptionPlanId getId() {
+        return id;
     }
 
     public BasePrice getBasePrice() {
