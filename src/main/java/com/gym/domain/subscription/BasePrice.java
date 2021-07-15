@@ -1,4 +1,4 @@
 package com.gym.domain.subscription;
 
-public record BasePrice() {
+public record BasePrice(double amount) {
 }
