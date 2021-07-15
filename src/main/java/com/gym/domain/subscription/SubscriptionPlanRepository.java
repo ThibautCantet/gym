@@ -1,4 +1,4 @@
-package com.gym;
+package com.gym.domain.subscription;
 
 public interface SubscriptionPlanRepository {
 

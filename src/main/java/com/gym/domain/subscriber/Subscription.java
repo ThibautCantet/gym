@@ -1,4 +1,6 @@
-package com.gym;
+package com.gym.domain.subscriber;
+
+import com.gym.domain.subscription.SubscriptionPlan;
 
 import java.util.Date;
 

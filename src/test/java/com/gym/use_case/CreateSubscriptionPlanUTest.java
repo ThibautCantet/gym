@@ -1,5 +1,9 @@
-package com.gym;
+package com.gym.use_case;
 
+import com.gym.domain.subscription.BasePrice;
+import com.gym.domain.subscription.Period;
+import com.gym.domain.subscription.SubscriptionPlan;
+import com.gym.infrastructure.InMemorySubscriptionPlanRepository;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

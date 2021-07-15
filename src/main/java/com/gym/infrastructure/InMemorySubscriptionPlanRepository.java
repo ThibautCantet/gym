@@ -1,4 +1,7 @@
-package com.gym;
+package com.gym.infrastructure;
+
+import com.gym.domain.subscription.SubscriptionPlan;
+import com.gym.domain.subscription.SubscriptionPlanRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +13,7 @@ public class InMemorySubscriptionPlanRepository implements SubscriptionPlanRepos
         subscriptionPlans = new ArrayList<>();
     }
 
-    List<SubscriptionPlan> getAllSubscriptionPlan() {
+    public List<SubscriptionPlan> getAllSubscriptionPlan() {
         return subscriptionPlans;
     }
 
