@@ -14,8 +14,9 @@
         <buildDate>${maven.build.timestamp}</buildDate>
         <prerequisites.maven.version>3.2.0</prerequisites.maven.version>
         <javac.encoding>UTF-8</javac.encoding>
-        <javac.source.version>1.8</javac.source.version>
-        <javac.target.version>1.8</javac.target.version>
+        <maven.compiler.source>16</maven.compiler.source>
+        <maven.compiler.target>16</maven.compiler.target>
+        <java.version>16</java.version>
 
 
         <!-- == Dependencies == -->

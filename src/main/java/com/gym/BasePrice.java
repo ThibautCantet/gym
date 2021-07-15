@@ -1,4 +1,4 @@
 package com.gym;
 
-public class BasePrice {
+public record BasePrice() {
 }
