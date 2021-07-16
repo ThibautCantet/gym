@@ -1,6 +1,7 @@
 package com.gym.infrastructure;
 
 import com.gym.domain.subscription.SubscriptionPlan;
+import com.gym.domain.subscription.SubscriptionPlanId;
 import com.gym.domain.subscription.SubscriptionPlanRepository;
 
 import java.util.ArrayList;
@@ -20,5 +21,13 @@ public class InMemorySubscriptionPlanRepository implements SubscriptionPlanRepos
     @Override
     public void save(SubscriptionPlan subscriptionPlan) {
         subscriptionPlans.add(subscriptionPlan);
+    }
+
+    @Override
+    public SubscriptionPlan findById(SubscriptionPlanId subscriptionPlanId) {
+        return subscriptionPlans.stream().
+                filter(subscriptionPlan -> subscriptionPlan.getId().equals(subscriptionPlanId))
+                .findFirst()
+                .orElse(null);
     }
 }

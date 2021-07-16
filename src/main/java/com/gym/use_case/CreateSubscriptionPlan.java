@@ -14,6 +14,9 @@ public class CreateSubscriptionPlan {
 
     public void execute(BasePrice basePrice, Period period) {
         final SubscriptionPlanId subscriptionPlanId = subscriptionPlanIdGenerator.next();
-        subscriptionPlanRepository.save(new SubscriptionPlan(subscriptionPlanId, basePrice, period));
+
+        final SubscriptionPlan subscriptionPlan = new SubscriptionPlan(subscriptionPlanId, basePrice, period);
+
+        subscriptionPlanRepository.save(subscriptionPlan);
     }
 }

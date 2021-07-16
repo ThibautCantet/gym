@@ -2,6 +2,7 @@ package com.gym.domain.subscriber;
 
 import com.gym.domain.subscription.BasePrice;
 import com.gym.domain.subscription.SubscriptionPlanId;
+import com.gym.domain.subscription.TotalPrice;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -22,10 +23,10 @@ public class SubscriptionUTest {
         @Test
         void build_subscription_with_base_price() {
             final SubscriptionPlanId subscriptionPlanId = new SubscriptionPlanId(UUID.randomUUID());
-            final BasePrice basePrice = new BasePrice(10d);
+            final TotalPrice totalPrice = new TotalPrice(10d);
             final Subscriber subscriber = new Subscriber();
 
-            final Subscription subscription = new Subscription(subscriptionId, subscriptionPlanId, basePrice, subscriber, clock);
+            final Subscription subscription = new Subscription(subscriptionId, subscriptionPlanId, totalPrice, subscriber, clock);
 
             assertThat(subscription.getSubscriptionId()).isEqualTo(subscriptionId);
             assertThat(subscription.getSubscriptionPlanId()).isEqualTo(subscriptionPlanId);

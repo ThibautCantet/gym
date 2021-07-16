@@ -1,7 +1,7 @@
 package com.gym.domain.subscriber;
 
-import com.gym.domain.subscription.BasePrice;
 import com.gym.domain.subscription.SubscriptionPlanId;
+import com.gym.domain.subscription.TotalPrice;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
@@ -13,12 +13,12 @@ public class Subscription {
     private final Subscriber subscriber;
     private final Price price;
 
-    public Subscription(SubscriptionId subscriptionId, SubscriptionPlanId subscriptionPlanId, BasePrice basePrice, Subscriber subscriber, Clock clock) {
+    public Subscription(SubscriptionId subscriptionId, SubscriptionPlanId subscriptionPlanId, TotalPrice totalPrice, Subscriber subscriber, Clock clock) {
         this.subscriptionId = subscriptionId;
         this.subscriptionPlanId = subscriptionPlanId;
         this.subscriber = subscriber;
         this.subscriptionDate = new SubscriptionDate(LocalDateTime.now(clock));
-        this.price = new Price(basePrice.amount());
+        this.price = new Price(totalPrice.value());
     }
 
     public SubscriptionId getSubscriptionId() {
