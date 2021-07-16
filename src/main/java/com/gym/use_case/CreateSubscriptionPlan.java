@@ -1,19 +1,16 @@
 package com.gym.use_case;
 
-import com.gym.domain.subscription.SubscriptionPlanIdGenerator;
 import com.gym.domain.subscription.*;
 
 public class CreateSubscriptionPlan {
-    private final SubscriptionPlanIdGenerator subscriptionPlanIdGenerator;
     private final SubscriptionPlanRepository subscriptionPlanRepository;
 
-    public CreateSubscriptionPlan(SubscriptionPlanIdGenerator subscriptionPlanIdGenerator, SubscriptionPlanRepository subscriptionPlanRepository) {
-        this.subscriptionPlanIdGenerator = subscriptionPlanIdGenerator;
+    public CreateSubscriptionPlan(SubscriptionPlanRepository subscriptionPlanRepository) {
         this.subscriptionPlanRepository = subscriptionPlanRepository;
     }
 
     public void execute(BasePrice basePrice, Period period) {
-        final SubscriptionPlanId subscriptionPlanId = subscriptionPlanIdGenerator.next();
+        final SubscriptionPlanId subscriptionPlanId = subscriptionPlanRepository.next();
 
         final SubscriptionPlan subscriptionPlan = new SubscriptionPlan(subscriptionPlanId, basePrice, period);
 

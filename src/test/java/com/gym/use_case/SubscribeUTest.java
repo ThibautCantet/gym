@@ -4,7 +4,6 @@ import com.gym.domain.subscriber.*;
 import com.gym.domain.subscription.*;
 import com.gym.infrastructure.InMemorySubscriptionPlanRepository;
 import com.gym.infrastructure.InMemorySubscriptionRepository;
-import com.gym.infrastructure.StaticSubscriptionIdGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -22,9 +21,8 @@ public class SubscribeUTest {
     private final UUID fixedUUID = UUID.randomUUID();
     private final SubscriptionPlanId subscriptionPlanId = new SubscriptionPlanId(UUID.randomUUID());
 
-    private final SubscriptionPlanRepository subscriptionPlanRepository = new InMemorySubscriptionPlanRepository();
-    private final SubscriptionRepository subscriptionRepository = new InMemorySubscriptionRepository();
-    private final SubscriptionIdGenerator subscriptionIdGenerator = new StaticSubscriptionIdGenerator(fixedUUID);
+    private final SubscriptionPlanRepository subscriptionPlanRepository = new InMemorySubscriptionPlanRepository(fixedUUID);
+    private final SubscriptionRepository subscriptionRepository = new InMemorySubscriptionRepository(fixedUUID);
 
     @BeforeEach
     void setUp() {
@@ -35,7 +33,7 @@ public class SubscribeUTest {
     class ExecuteShould {
         @Test
         void save_new_subscription() {
-            final Subscribe subscribe = new Subscribe(subscriptionPlanRepository, subscriptionIdGenerator, subscriptionRepository, clock);
+            final Subscribe subscribe = new Subscribe(subscriptionPlanRepository, subscriptionRepository, clock);
             final Subscriber subscriber = new Subscriber();
 
             subscribe.execute(subscriber, subscriptionPlanId);
