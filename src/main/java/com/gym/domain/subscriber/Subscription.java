@@ -4,6 +4,7 @@ import com.gym.domain.subscription.SubscriptionPlanId;
 import com.gym.domain.subscription.TotalPrice;
 
 import java.time.Clock;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Subscription {
@@ -48,5 +49,9 @@ public class Subscription {
 
     public Price getPrice() {
         return price;
+    }
+
+    public boolean isOnGoing(LocalDate localDate) {
+        return subscriptionDate.isOnGoing(localDate);
     }
 }

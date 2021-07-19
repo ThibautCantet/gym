@@ -26,7 +26,16 @@ public class InMemorySubscriptionRepository implements SubscriptionRepository {
         subscriptions.add(subscription);
     }
 
+    @Override
+    public List<Subscription> findAll() {
+        return subscriptions;
+    }
+
     public List<Subscription> getSubscriptions() {
         return subscriptions;
+    }
+
+    public void addSubscriptions(List<Subscription> subscriptions) {
+        this.subscriptions.addAll(subscriptions);
     }
 }
