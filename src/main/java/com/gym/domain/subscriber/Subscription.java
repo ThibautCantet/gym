@@ -1,6 +1,6 @@
 package com.gym.domain.subscriber;
 
-import com.gym.domain.subscription.SubscriptionPlan;
+import com.gym.domain.subscription_plan.SubscriptionPlan;
 
 import java.util.Date;
 
