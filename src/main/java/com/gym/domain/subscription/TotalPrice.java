@@ -5,7 +5,7 @@ public record TotalPrice(Double value) {
         if (discountRate.canApplyRate()) {
             return new TotalPrice(this.value * (1 - discountRate.getRate() / 100));
         } else {
-            return new TotalPrice(this.value);
+            return this;
         }
     }
 }

@@ -9,16 +9,25 @@ import java.time.LocalDateTime;
 public class Subscription {
     private final SubscriptionId subscriptionId;
     private final SubscriptionPlanId subscriptionPlanId;
+    private final SubscriberId subscriberId;
     private final SubscriptionDate subscriptionDate;
-    private final Subscriber subscriber;
     private final Price price;
 
-    public Subscription(SubscriptionId subscriptionId, SubscriptionPlanId subscriptionPlanId, TotalPrice totalPrice, Subscriber subscriber, Clock clock) {
+    private Subscription(SubscriptionId subscriptionId, SubscriptionPlanId subscriptionPlanId, TotalPrice totalPrice, Subscriber subscriber, Clock clock) {
         this.subscriptionId = subscriptionId;
         this.subscriptionPlanId = subscriptionPlanId;
-        this.subscriber = subscriber;
+        this.subscriberId = subscriber.getId();
         this.subscriptionDate = new SubscriptionDate(LocalDateTime.now(clock));
-        this.price = new Price(totalPrice.value());
+        this.price = initializePriceWithDiscount(totalPrice, subscriber);
+    }
+
+    private Price initializePriceWithDiscount(TotalPrice totalPrice, Subscriber subscriber) {
+        final Price price = new Price(totalPrice.value());
+        return price.applyDiscount(subscriber.isStudent());
+    }
+
+    public static Subscription subscribe(SubscriptionId subscriptionId, SubscriptionPlanId subscriptionPlanId, TotalPrice totalPrice, Subscriber subscriber, Clock clock) {
+        return new Subscription(subscriptionId, subscriptionPlanId, totalPrice, subscriber, clock);
     }
 
     public SubscriptionId getSubscriptionId() {
@@ -27,6 +36,10 @@ public class Subscription {
 
     public SubscriptionPlanId getSubscriptionPlanId() {
         return subscriptionPlanId;
+    }
+
+    public SubscriberId getSubscriberId() {
+        return subscriberId;
     }
 
     public SubscriptionDate getSubscriptionDate() {

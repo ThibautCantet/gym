@@ -22,7 +22,7 @@ public class Subscribe {
         final SubscriptionPlan subscriptionPlan = subscriptionPlanRepository.findById(subscriptionPlanId);
         final TotalPrice basePrice = subscriptionPlan.getTotalPrice();
 
-        final Subscription subscription = new Subscription(subscriptionId, subscriptionPlanId, basePrice, subscriber, clock);
+        final Subscription subscription = Subscription.subscribe(subscriptionId, subscriptionPlanId, basePrice, subscriber, clock);
 
         subscriptionRepository.save(subscription);
     }

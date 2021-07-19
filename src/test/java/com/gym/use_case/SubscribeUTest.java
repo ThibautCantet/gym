@@ -34,13 +34,13 @@ public class SubscribeUTest {
         @Test
         void save_new_subscription() {
             final Subscribe subscribe = new Subscribe(subscriptionPlanRepository, subscriptionRepository, clock);
-            final Subscriber subscriber = new Subscriber();
+            final Subscriber subscriber = Subscriber.createRegular(new SubscriberId(UUID.randomUUID()));
 
             subscribe.execute(subscriber, subscriptionPlanId);
 
             assertThat(((InMemorySubscriptionRepository) subscriptionRepository).getSubscriptions())
                     .usingFieldByFieldElementComparator()
-                    .containsExactly(new Subscription(
+                    .containsExactly(Subscription.subscribe(
                             new SubscriptionId(fixedUUID),
                             subscriptionPlanId,
                             new TotalPrice(10d),
