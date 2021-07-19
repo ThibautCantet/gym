@@ -4,7 +4,7 @@
 
 - Owner can create monthly or yearly subscription plans, with a base price
 - Yearly subscriptions get 10% off
-- Students that subscribe to any plan get 20% off
+- Students that subscribe to any plan get 20% off (replace yearly discount)
 - Owner can see how much they make from ongoing subscriptions for a given month
 - Owner can change the price of a plan
 - Monthly subscriptions are renewed automatically

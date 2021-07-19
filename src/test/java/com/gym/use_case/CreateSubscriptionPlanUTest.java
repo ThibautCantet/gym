@@ -45,6 +45,6 @@ public class CreateSubscriptionPlanUTest {
         assertThat(subscriptionPlan.getBasePrice()).isEqualTo(basePrice);
         assertThat(subscriptionPlan.getTotalPrice()).isEqualTo(new TotalPrice(9d));
         assertThat(subscriptionPlan.getPeriod()).isEqualTo(period);
-        assertThat(subscriptionPlan.getDiscountRate()).isEqualToComparingFieldByField(new DiscountRate(Period.Yearly));
+        assertThat(subscriptionPlan.getDiscountRate()).isEqualToComparingFieldByField(new DiscountRate(10d));
     }
 }

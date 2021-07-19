@@ -7,6 +7,10 @@ public class DiscountRate {
         value = period.equals(Period.Montly) ? 0d: 10d;
     }
 
+    public DiscountRate(Double value) {
+        this.value = value;
+    }
+
     public Double getValue() {
         return value;
     }
