@@ -7,6 +7,7 @@ import com.gym.domain.subscription.SubscriptionPlanRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public class InMemorySubscriptionPlanRepository implements SubscriptionPlanRepository {
@@ -27,8 +28,18 @@ public class InMemorySubscriptionPlanRepository implements SubscriptionPlanRepos
         return subscriptionPlans;
     }
 
+    public void add(SubscriptionPlan subscriptionPlan) {
+        subscriptionPlans.add(subscriptionPlan);
+    }
+
     @Override
     public void save(SubscriptionPlan subscriptionPlan) {
+        final Optional<SubscriptionPlan> exists = subscriptionPlans.stream()
+                .filter(plan -> plan.getId().equals(subscriptionPlan.getId()))
+                .findFirst();
+        if (exists.isPresent()) {
+            subscriptionPlans.remove(exists.get());
+        }
         subscriptionPlans.add(subscriptionPlan);
     }
 

@@ -39,4 +39,8 @@ public class SubscriptionPlan {
     public TotalPrice getTotalPrice() {
         return totalPrice;
     }
+
+    public SubscriptionPlan changePrice(BasePrice basePrice) {
+        return new SubscriptionPlan(this.id, basePrice, this.period);
+    }
 }
