@@ -25,7 +25,7 @@ public class CreateSubscriptionPlanUTest {
 
         assertThat(subscriptionPlanRepository.getAllSubscriptionPlan())
                 .usingFieldByFieldElementComparator()
-                .containsExactly(new SubscriptionPlan(subscriptionPlanId, basePrice, period));
+                .containsExactly(SubscriptionPlan.createMonthly(subscriptionPlanId, basePrice));
     }
 
     @Test
@@ -39,6 +39,6 @@ public class CreateSubscriptionPlanUTest {
 
         assertThat(subscriptionPlanRepository.getAllSubscriptionPlan())
                 .usingFieldByFieldElementComparator()
-                .containsExactly(new SubscriptionPlan(subscriptionPlanId, basePrice, period));
+                .containsExactly(SubscriptionPlan.createYearly(subscriptionPlanId, basePrice));
     }
 }

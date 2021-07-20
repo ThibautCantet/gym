@@ -12,7 +12,12 @@ public class CreateSubscriptionPlan {
     public void execute(BasePrice basePrice, Period period) {
         final SubscriptionPlanId subscriptionPlanId = subscriptionPlanRepository.next();
 
-        final SubscriptionPlan subscriptionPlan = new SubscriptionPlan(subscriptionPlanId, basePrice, period);
+        SubscriptionPlan subscriptionPlan;
+        if (period.equals(Period.Yearly)) {
+            subscriptionPlan = SubscriptionPlan.createYearly(subscriptionPlanId, basePrice);
+        } else {
+            subscriptionPlan = SubscriptionPlan.createMonthly(subscriptionPlanId, basePrice);
+        }
 
         subscriptionPlanRepository.save(subscriptionPlan);
     }

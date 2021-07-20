@@ -14,7 +14,7 @@ class ChangeSubscriptionPlanPriceUTest {
     void execute_should_change_subscriptionPlan_price_when_monthly_plan() {
         final SubscriptionPlanRepository subscriptionPlanRepository = new InMemorySubscriptionPlanRepository(UUID.randomUUID());
         final SubscriptionPlanId subscriptionPlanId = new SubscriptionPlanId(UUID.randomUUID());
-        ((InMemorySubscriptionPlanRepository) subscriptionPlanRepository).add(new SubscriptionPlan(subscriptionPlanId, new BasePrice(90d), Period.Montly));
+        ((InMemorySubscriptionPlanRepository) subscriptionPlanRepository).add(SubscriptionPlan.createMonthly(subscriptionPlanId, new BasePrice(90d)));
         final ChangeSubscriptionPlanPrice changeSubscriptionPlanPrice = new ChangeSubscriptionPlanPrice(subscriptionPlanRepository);
 
         changeSubscriptionPlanPrice.execute(subscriptionPlanId, new BasePrice(100d));
@@ -28,7 +28,7 @@ class ChangeSubscriptionPlanPriceUTest {
     void execute_should_change_subscriptionPlan_price_when_yearly_plan() {
         final SubscriptionPlanRepository subscriptionPlanRepository = new InMemorySubscriptionPlanRepository(UUID.randomUUID());
         final SubscriptionPlanId subscriptionPlanId = new SubscriptionPlanId(UUID.randomUUID());
-        ((InMemorySubscriptionPlanRepository) subscriptionPlanRepository).add(new SubscriptionPlan(subscriptionPlanId, new BasePrice(20d), Period.Yearly));
+        ((InMemorySubscriptionPlanRepository) subscriptionPlanRepository).add(SubscriptionPlan.createYearly(subscriptionPlanId, new BasePrice(20d)));
         final ChangeSubscriptionPlanPrice changeSubscriptionPlanPrice = new ChangeSubscriptionPlanPrice(subscriptionPlanRepository);
 
         changeSubscriptionPlanPrice.execute(subscriptionPlanId, new BasePrice(100d));

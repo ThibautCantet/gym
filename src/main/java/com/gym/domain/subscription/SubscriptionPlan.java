@@ -7,12 +7,20 @@ public class SubscriptionPlan {
     private final DiscountRate discountRate;
     private final TotalPrice totalPrice;
 
-    public SubscriptionPlan(SubscriptionPlanId subscriptionPlanId, BasePrice basePrice, Period period) {
+    private SubscriptionPlan(SubscriptionPlanId subscriptionPlanId, BasePrice basePrice, Period period) {
         this.id = subscriptionPlanId;
         this.basePrice = basePrice;
         this.period = period;
         this.discountRate = new DiscountRate(period);
         this.totalPrice = initializeTotalPrice(basePrice);
+    }
+
+    public static SubscriptionPlan createMonthly(SubscriptionPlanId subscriptionPlanId, BasePrice basePrice) {
+        return new SubscriptionPlan(subscriptionPlanId, basePrice, Period.Montly);
+    }
+
+    public static SubscriptionPlan createYearly(SubscriptionPlanId subscriptionPlanId, BasePrice basePrice) {
+        return new SubscriptionPlan(subscriptionPlanId, basePrice, Period.Yearly);
     }
 
     private TotalPrice initializeTotalPrice(BasePrice basePrice) {
