@@ -5,11 +5,12 @@ import com.gym.domain.subscriber.SubscriptionId;
 import com.gym.domain.subscriber.SubscriptionRepository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
 public class InMemorySubscriptionRepository implements SubscriptionRepository {
-    private final List<Subscription> subscriptions = new ArrayList<>();
+    private final HashMap<SubscriptionId, Subscription> subscriptions = new HashMap();
     private final UUID fixedUUID;
 
     public InMemorySubscriptionRepository(UUID fixedUUID) {
@@ -23,19 +24,27 @@ public class InMemorySubscriptionRepository implements SubscriptionRepository {
 
     @Override
     public void save(Subscription subscription) {
-        subscriptions.add(subscription);
+        subscriptions.put(subscription.getSubscriptionId(), subscription);
     }
 
     @Override
     public List<Subscription> findAll() {
-        return subscriptions;
+        return subscriptions.values().stream().toList();
+    }
+
+    @Override
+    public void saveAll(List<Subscription> subscriptionsToRenew) {
+        subscriptionsToRenew.stream()
+                .forEach(subscription ->
+                        subscriptions.put(subscription.getSubscriptionId(), subscription));
     }
 
     public List<Subscription> getSubscriptions() {
-        return subscriptions;
+        return subscriptions.values().stream().toList();
     }
 
     public void addSubscriptions(List<Subscription> subscriptions) {
-        this.subscriptions.addAll(subscriptions);
+        subscriptions
+                .forEach(subscription -> this.subscriptions.put(subscription.getSubscriptionId(), subscription));
     }
 }

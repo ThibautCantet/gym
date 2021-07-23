@@ -21,8 +21,9 @@ public class Subscribe {
         final SubscriptionId subscriptionId = subscriptionRepository.next();
         final SubscriptionPlan subscriptionPlan = subscriptionPlanRepository.findById(subscriptionPlanId);
         final TotalPrice basePrice = subscriptionPlan.getTotalPrice();
+        final Period period = subscriptionPlan.getPeriod();
 
-        final Subscription subscription = Subscription.subscribe(subscriptionId, subscriptionPlanId, basePrice, subscriber, clock);
+        final Subscription subscription = Subscription.subscribe(subscriptionId, subscriptionPlanId, period, basePrice, subscriber, clock);
 
         subscriptionRepository.save(subscription);
     }

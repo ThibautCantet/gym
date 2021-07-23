@@ -1,25 +1,38 @@
 package com.gym.domain.subscriber;
 
+import com.gym.domain.subscription.Period;
 import com.gym.domain.subscription.SubscriptionPlanId;
 import com.gym.domain.subscription.TotalPrice;
 
 import java.time.Clock;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class Subscription {
     private final SubscriptionId subscriptionId;
     private final SubscriptionPlanId subscriptionPlanId;
+    private final Period period;
     private final SubscriberId subscriberId;
-    private final SubscriptionDate subscriptionDate;
+    private SubscriptionDate subscriptionDate;
     private final Price price;
 
-    private Subscription(SubscriptionId subscriptionId, SubscriptionPlanId subscriptionPlanId, TotalPrice totalPrice, Subscriber subscriber, Clock clock) {
+    private Subscription(SubscriptionId subscriptionId,
+                         SubscriptionPlanId subscriptionPlanId,
+                         Period period,
+                         TotalPrice totalPrice,
+                         Subscriber subscriber,
+                         Clock clock) {
         this.subscriptionId = subscriptionId;
         this.subscriptionPlanId = subscriptionPlanId;
+        this.period = period;
         this.subscriberId = subscriber.getId();
-        this.subscriptionDate = new SubscriptionDate(LocalDateTime.now(clock));
+        final LocalDate today = LocalDate.now(clock);
+        this.subscriptionDate = initializeSubscriptionDate(today, period);
         this.price = initializePriceWithDiscount(totalPrice, subscriber);
+    }
+
+    private SubscriptionDate initializeSubscriptionDate(LocalDate today, Period period) {
+        final LocalDate endDate = period.equals(Period.Montly) ? today.plusMonths(1) : today.plusYears(1);
+        return new SubscriptionDate(today, endDate);
     }
 
     private Price initializePriceWithDiscount(TotalPrice totalPrice, Subscriber subscriber) {
@@ -27,8 +40,8 @@ public class Subscription {
         return price.applyDiscount(subscriber.isStudent());
     }
 
-    public static Subscription subscribe(SubscriptionId subscriptionId, SubscriptionPlanId subscriptionPlanId, TotalPrice totalPrice, Subscriber subscriber, Clock clock) {
-        return new Subscription(subscriptionId, subscriptionPlanId, totalPrice, subscriber, clock);
+    public static Subscription subscribe(SubscriptionId subscriptionId, SubscriptionPlanId subscriptionPlanId, Period monthlyPeriod, TotalPrice totalPrice, Subscriber subscriber, Clock clock) {
+        return new Subscription(subscriptionId, subscriptionPlanId, monthlyPeriod, totalPrice, subscriber, clock);
     }
 
     public SubscriptionId getSubscriptionId() {
@@ -53,5 +66,13 @@ public class Subscription {
 
     public boolean isOnGoing(LocalDate localDate) {
         return subscriptionDate.isOnGoing(localDate);
+    }
+
+    public boolean isToRenew(LocalDate date) {
+        return period.equals(Period.Montly) && isOnGoing(date);
+    }
+
+    public void renew() {
+        subscriptionDate = subscriptionDate.renew();
     }
 }

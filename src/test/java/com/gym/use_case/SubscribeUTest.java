@@ -43,6 +43,7 @@ public class SubscribeUTest {
                     .containsExactly(Subscription.subscribe(
                             new SubscriptionId(fixedUUID),
                             subscriptionPlanId,
+                            Period.Montly,
                             new TotalPrice(10d),
                             subscriber,
                             clock));
