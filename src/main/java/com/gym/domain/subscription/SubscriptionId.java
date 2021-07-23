@@ -1,4 +1,4 @@
-package com.gym.domain.subscriber;
+package com.gym.domain.subscription;
 
 import java.util.UUID;
 

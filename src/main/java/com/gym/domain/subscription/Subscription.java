@@ -1,10 +1,10 @@
-package com.gym.domain.subscriber;
+package com.gym.domain.subscription;
 
-import com.gym.domain.membership.Subscriber;
-import com.gym.domain.membership.SubscriberId;
-import com.gym.domain.subscription.Period;
-import com.gym.domain.subscription.SubscriptionPlanId;
-import com.gym.domain.subscription.TotalPrice;
+import com.gym.domain.membership.Member;
+import com.gym.domain.membership.MemberId;
+import com.gym.domain.subscription_plan.Period;
+import com.gym.domain.subscription_plan.SubscriptionPlanId;
+import com.gym.domain.subscription_plan.TotalPrice;
 
 import java.time.Clock;
 import java.time.LocalDate;
@@ -13,7 +13,7 @@ public class Subscription {
     private final SubscriptionId subscriptionId;
     private final SubscriptionPlanId subscriptionPlanId;
     private final Period period;
-    private final SubscriberId subscriberId;
+    private final MemberId memberId;
     private final SubscriptionDate subscriptionDate;
     private final Price price;
 
@@ -21,22 +21,22 @@ public class Subscription {
                          SubscriptionPlanId subscriptionPlanId,
                          Period period,
                          TotalPrice totalPrice,
-                         Subscriber subscriber,
+                         Member member,
                          Clock clock) {
         this.subscriptionId = subscriptionId;
         this.subscriptionPlanId = subscriptionPlanId;
         this.period = period;
-        this.subscriberId = subscriber.getId();
+        this.memberId = member.getId();
         final LocalDate today = LocalDate.now(clock);
         this.subscriptionDate = initializeSubscriptionDate(today, period);
-        this.price = initializePriceWithDiscount(totalPrice, subscriber);
+        this.price = initializePriceWithDiscount(totalPrice, member);
     }
 
-    private Subscription(SubscriptionId subscriptionId, SubscriptionPlanId subscriptionPlanId, Period period, SubscriberId subscriberId, SubscriptionDate subscriptionDate, Price price) {
+    private Subscription(SubscriptionId subscriptionId, SubscriptionPlanId subscriptionPlanId, Period period, MemberId memberId, SubscriptionDate subscriptionDate, Price price) {
         this.subscriptionId = subscriptionId;
         this.subscriptionPlanId = subscriptionPlanId;
         this.period = period;
-        this.subscriberId = subscriberId;
+        this.memberId = memberId;
         this.subscriptionDate = subscriptionDate;
         this.price = price;
     }
@@ -46,13 +46,13 @@ public class Subscription {
         return new SubscriptionDate(today, endDate);
     }
 
-    private Price initializePriceWithDiscount(TotalPrice totalPrice, Subscriber subscriber) {
+    private Price initializePriceWithDiscount(TotalPrice totalPrice, Member member) {
         final Price price = new Price(totalPrice.value());
-        return price.applyDiscount(subscriber.isStudent());
+        return price.applyDiscount(member.isStudent());
     }
 
-    public static Subscription subscribe(SubscriptionId subscriptionId, SubscriptionPlanId subscriptionPlanId, Period monthlyPeriod, TotalPrice totalPrice, Subscriber subscriber, Clock clock) {
-        return new Subscription(subscriptionId, subscriptionPlanId, monthlyPeriod, totalPrice, subscriber, clock);
+    public static Subscription subscribe(SubscriptionId subscriptionId, SubscriptionPlanId subscriptionPlanId, Period monthlyPeriod, TotalPrice totalPrice, Member member, Clock clock) {
+        return new Subscription(subscriptionId, subscriptionPlanId, monthlyPeriod, totalPrice, member, clock);
     }
 
     public SubscriptionId getSubscriptionId() {
@@ -63,8 +63,8 @@ public class Subscription {
         return subscriptionPlanId;
     }
 
-    public SubscriberId getSubscriberId() {
-        return subscriberId;
+    public MemberId getSubscriberId() {
+        return memberId;
     }
 
     public SubscriptionDate getSubscriptionDate() {
@@ -87,7 +87,7 @@ public class Subscription {
         return  new Subscription(this.subscriptionId,
         this.subscriptionPlanId,
         this.period,
-        this.subscriberId,
+        this.memberId,
         this.subscriptionDate.renew(),
         this.price);
     }

@@ -1,4 +1,4 @@
-package com.gym.domain.subscription;
+package com.gym.domain.subscription_plan;
 
 public class SubscriptionPlan {
     private final SubscriptionPlanId id;

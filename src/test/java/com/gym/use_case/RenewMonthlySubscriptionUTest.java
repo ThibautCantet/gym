@@ -1,10 +1,10 @@
 package com.gym.use_case;
 
 import com.gym.domain.membership.Email;
-import com.gym.domain.membership.Subscriber;
-import com.gym.domain.membership.SubscriberId;
-import com.gym.domain.subscriber.*;
+import com.gym.domain.membership.Member;
+import com.gym.domain.membership.MemberId;
 import com.gym.domain.subscription.*;
+import com.gym.domain.subscription_plan.*;
 import com.gym.infrastructure.InMemorySubscriptionPlanRepository;
 import com.gym.infrastructure.InMemorySubscriptionRepository;
 import org.junit.jupiter.api.Test;
@@ -38,7 +38,7 @@ class RenewMonthlySubscriptionUTest {
                 monthlySubscriptionPlanId,
                 Period.Montly,
                 new TotalPrice(80d),
-                Subscriber.createRegular(new SubscriberId(UUID.randomUUID()), email),
+                Member.createRegular(new MemberId(UUID.randomUUID()), email),
                 LAST_MONTH);
         ((InMemorySubscriptionRepository) subscriptionRepository).addSubscriptions(Collections.singletonList(monthlySubscriptionToRenew));
 
@@ -66,7 +66,7 @@ class RenewMonthlySubscriptionUTest {
                 yearlySubscriptionPlanId,
                 Period.Yearly,
                 new TotalPrice(100d),
-                Subscriber.createRegular(new SubscriberId(UUID.randomUUID()), email),
+                Member.createRegular(new MemberId(UUID.randomUUID()), email),
                 LAST_MONTH);
         final SubscriptionRepository subscriptionRepository = new InMemorySubscriptionRepository(UUID.randomUUID());
         ((InMemorySubscriptionRepository) subscriptionRepository).addSubscriptions(Collections.singletonList(yearlySubscription));

@@ -1,4 +1,4 @@
-package com.gym.domain.subscription;
+package com.gym.domain.subscription_plan;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

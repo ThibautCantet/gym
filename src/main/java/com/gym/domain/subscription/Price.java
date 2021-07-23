@@ -1,4 +1,4 @@
-package com.gym.domain.subscriber;
+package com.gym.domain.subscription;
 
 public record Price(Double value) {
     public Price applyDiscount(boolean isStudent) {

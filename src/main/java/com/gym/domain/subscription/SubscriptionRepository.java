@@ -1,7 +1,6 @@
-package com.gym.domain.subscriber;
+package com.gym.domain.subscription;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 public interface SubscriptionRepository {
     SubscriptionId next();

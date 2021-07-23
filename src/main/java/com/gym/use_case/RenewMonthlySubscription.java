@@ -1,7 +1,7 @@
 package com.gym.use_case;
 
-import com.gym.domain.subscriber.Subscription;
-import com.gym.domain.subscriber.SubscriptionRepository;
+import com.gym.domain.subscription.Subscription;
+import com.gym.domain.subscription.SubscriptionRepository;
 
 import java.time.Clock;
 import java.time.LocalDate;

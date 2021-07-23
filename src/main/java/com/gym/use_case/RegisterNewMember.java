@@ -2,30 +2,30 @@ package com.gym.use_case;
 
 import com.gym.domain.membership.Email;
 import com.gym.domain.membership.Mailer;
-import com.gym.domain.membership.SubscriberRepository;
-import com.gym.domain.membership.Subscriber;
-import com.gym.domain.membership.SubscriberId;
+import com.gym.domain.membership.MemberRepository;
+import com.gym.domain.membership.Member;
+import com.gym.domain.membership.MemberId;
 
 public class RegisterNewMember {
-    private final SubscriberRepository subscriberRepository;
+    private final MemberRepository memberRepository;
     private final Mailer mailer;
 
-    public RegisterNewMember(SubscriberRepository subscriberRepository, Mailer mailer) {
-        this.subscriberRepository = subscriberRepository;
+    public RegisterNewMember(MemberRepository memberRepository, Mailer mailer) {
+        this.memberRepository = memberRepository;
         this.mailer = mailer;
     }
 
     public void execute(Email email, boolean isStudent) {
-        SubscriberId subscriberId = subscriberRepository.next();
+        MemberId memberId = memberRepository.next();
 
-        final Subscriber subscriber;
+        final Member member;
         if (isStudent) {
-            subscriber = Subscriber.createStudent(subscriberId, email);
+            member = Member.createStudent(memberId, email);
         } else {
-            subscriber = Subscriber.createRegular(subscriberId, email);
+            member = Member.createRegular(memberId, email);
         }
-        subscriberRepository.save(subscriber);
+        memberRepository.save(member);
 
-        mailer.sentWelcomeEmail(subscriber);
+        mailer.sentWelcomeEmail(member);
     }
 }

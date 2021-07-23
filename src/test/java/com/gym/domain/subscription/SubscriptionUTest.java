@@ -1,11 +1,11 @@
-package com.gym.domain.subscriber;
+package com.gym.domain.subscription;
 
 import com.gym.domain.membership.Email;
-import com.gym.domain.membership.Subscriber;
-import com.gym.domain.membership.SubscriberId;
-import com.gym.domain.subscription.Period;
-import com.gym.domain.subscription.SubscriptionPlanId;
-import com.gym.domain.subscription.TotalPrice;
+import com.gym.domain.membership.Member;
+import com.gym.domain.membership.MemberId;
+import com.gym.domain.subscription_plan.Period;
+import com.gym.domain.subscription_plan.SubscriptionPlanId;
+import com.gym.domain.subscription_plan.TotalPrice;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -33,13 +33,13 @@ public class SubscriptionUTest {
         void build_subscription_with_price_for_regular_subscriber() {
             final SubscriptionPlanId subscriptionPlanId = new SubscriptionPlanId(UUID.randomUUID());
             final TotalPrice totalPrice = new TotalPrice(10d);
-            final SubscriberId subscriberId = new SubscriberId(UUID.randomUUID());
-            final Subscriber subscriber = Subscriber.createRegular(subscriberId, email);
+            final MemberId memberId = new MemberId(UUID.randomUUID());
+            final Member member = Member.createRegular(memberId, email);
 
-            final Subscription subscription = Subscription.subscribe(subscriptionId, subscriptionPlanId, MONTHLY_PERIOD, totalPrice, subscriber, clock);
+            final Subscription subscription = Subscription.subscribe(subscriptionId, subscriptionPlanId, MONTHLY_PERIOD, totalPrice, member, clock);
 
             assertThat(subscription.getSubscriptionId()).isEqualTo(subscriptionId);
-            assertThat(subscription.getSubscriberId()).isEqualTo(subscriberId);
+            assertThat(subscription.getSubscriberId()).isEqualTo(memberId);
             assertThat(subscription.getSubscriptionPlanId()).isEqualTo(subscriptionPlanId);
             assertThat(subscription.getPrice()).isEqualTo(new Price(10d));
         }
@@ -48,13 +48,13 @@ public class SubscriptionUTest {
         void build_subscription_with_discounted_price_for_student_subscriber() {
             final SubscriptionPlanId subscriptionPlanId = new SubscriptionPlanId(UUID.randomUUID());
             final TotalPrice totalPrice = new TotalPrice(100d);
-            final SubscriberId subscriberId = new SubscriberId(UUID.randomUUID());
-            final Subscriber subscriber = Subscriber.createStudent(subscriberId, email);
+            final MemberId memberId = new MemberId(UUID.randomUUID());
+            final Member member = Member.createStudent(memberId, email);
 
-            final Subscription subscription = Subscription.subscribe(subscriptionId, subscriptionPlanId, MONTHLY_PERIOD, totalPrice, subscriber, clock);
+            final Subscription subscription = Subscription.subscribe(subscriptionId, subscriptionPlanId, MONTHLY_PERIOD, totalPrice, member, clock);
 
             assertThat(subscription.getSubscriptionId()).isEqualTo(subscriptionId);
-            assertThat(subscription.getSubscriberId()).isEqualTo(subscriberId);
+            assertThat(subscription.getSubscriberId()).isEqualTo(memberId);
             assertThat(subscription.getSubscriptionPlanId()).isEqualTo(subscriptionPlanId);
             assertThat(subscription.getPrice()).isEqualTo(new Price(80d));
         }
@@ -63,10 +63,10 @@ public class SubscriptionUTest {
         void build_monthly_subscription_for_one_month() {
             final SubscriptionPlanId subscriptionPlanId = new SubscriptionPlanId(UUID.randomUUID());
             final TotalPrice totalPrice = new TotalPrice(10d);
-            final SubscriberId subscriberId = new SubscriberId(UUID.randomUUID());
-            final Subscriber subscriber = Subscriber.createRegular(subscriberId, email);
+            final MemberId memberId = new MemberId(UUID.randomUUID());
+            final Member member = Member.createRegular(memberId, email);
 
-            final Subscription subscription = Subscription.subscribe(subscriptionId, subscriptionPlanId, MONTHLY_PERIOD, totalPrice, subscriber, clock);
+            final Subscription subscription = Subscription.subscribe(subscriptionId, subscriptionPlanId, MONTHLY_PERIOD, totalPrice, member, clock);
 
             assertThat(subscription.getSubscriptionDate()).isEqualTo(new SubscriptionDate(TODAY, IN_ONE_MONTH));
         }
@@ -74,10 +74,10 @@ public class SubscriptionUTest {
         void build_yearly_subscription_for_one_year() {
             final SubscriptionPlanId subscriptionPlanId = new SubscriptionPlanId(UUID.randomUUID());
             final TotalPrice totalPrice = new TotalPrice(10d);
-            final SubscriberId subscriberId = new SubscriberId(UUID.randomUUID());
-            final Subscriber subscriber = Subscriber.createRegular(subscriberId, email);
+            final MemberId memberId = new MemberId(UUID.randomUUID());
+            final Member member = Member.createRegular(memberId, email);
 
-            final Subscription subscription = Subscription.subscribe(subscriptionId, subscriptionPlanId, YEARLY_PERIOD, totalPrice, subscriber, clock);
+            final Subscription subscription = Subscription.subscribe(subscriptionId, subscriptionPlanId, YEARLY_PERIOD, totalPrice, member, clock);
 
             assertThat(subscription.getSubscriptionDate()).isEqualTo(new SubscriptionDate(TODAY, IN_ONE_YEAR));
         }

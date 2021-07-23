@@ -1,12 +1,12 @@
 package com.gym.use_case;
 
-import com.gym.domain.subscriber.DoubleMailer;
+import com.gym.domain.subscription.DoubleMailer;
 import com.gym.domain.membership.Email;
 import com.gym.domain.membership.Mailer;
-import com.gym.domain.membership.SubscriberRepository;
-import com.gym.domain.membership.Subscriber;
-import com.gym.domain.membership.SubscriberId;
-import com.gym.infrastructure.InMemorySubscriberRepository;
+import com.gym.domain.membership.MemberRepository;
+import com.gym.domain.membership.Member;
+import com.gym.domain.membership.MemberId;
+import com.gym.infrastructure.InMemoryMemberRepository;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
@@ -19,8 +19,8 @@ class RegisterNewMemberUTest {
     void execute_should_send_email_to_new_member() {
         final Mailer mailer = new DoubleMailer();
 
-        final SubscriberRepository subscriberRepository = new InMemorySubscriberRepository(UUID.randomUUID());
-        final RegisterNewMember registerNewMember = new RegisterNewMember(subscriberRepository, mailer);
+        final MemberRepository memberRepository = new InMemoryMemberRepository(UUID.randomUUID());
+        final RegisterNewMember registerNewMember = new RegisterNewMember(memberRepository, mailer);
         final Email email = new Email("thibaut.cantet@kata.fr");
         final boolean isStudent = false;
 
@@ -34,18 +34,18 @@ class RegisterNewMemberUTest {
         final Mailer mailer = new DoubleMailer();
 
         final UUID randomUUID = UUID.randomUUID();
-        final SubscriberId subscriberId = new SubscriberId(randomUUID);
+        final MemberId memberId = new MemberId(randomUUID);
 
-        final SubscriberRepository subscriberRepository = new InMemorySubscriberRepository(randomUUID);
-        final RegisterNewMember registerNewMember = new RegisterNewMember(subscriberRepository, mailer);
+        final MemberRepository memberRepository = new InMemoryMemberRepository(randomUUID);
+        final RegisterNewMember registerNewMember = new RegisterNewMember(memberRepository, mailer);
         final Email email = new Email("thibaut.cantet@kata.fr");
         final boolean isStudent = false;
 
         registerNewMember.execute(email, isStudent);
 
-        assertThat((((InMemorySubscriberRepository) subscriberRepository).getSubscribers()))
+        assertThat((((InMemoryMemberRepository) memberRepository).getSubscribers()))
                 .usingElementComparatorIgnoringFields()
-                .containsExactly(Subscriber.createRegular(subscriberId, email));
+                .containsExactly(Member.createRegular(memberId, email));
     }
 
     @Test
@@ -53,17 +53,17 @@ class RegisterNewMemberUTest {
         final Mailer mailer = new DoubleMailer();
 
         final UUID randomUUID = UUID.randomUUID();
-        final SubscriberId subscriberId = new SubscriberId(randomUUID);
+        final MemberId memberId = new MemberId(randomUUID);
 
-        final SubscriberRepository subscriberRepository = new InMemorySubscriberRepository(randomUUID);
-        final RegisterNewMember registerNewMember = new RegisterNewMember(subscriberRepository, mailer);
+        final MemberRepository memberRepository = new InMemoryMemberRepository(randomUUID);
+        final RegisterNewMember registerNewMember = new RegisterNewMember(memberRepository, mailer);
         final Email email = new Email("thibaut.cantet@kata.fr");
         final boolean isStudent = true;
 
         registerNewMember.execute(email, isStudent);
 
-        assertThat((((InMemorySubscriberRepository) subscriberRepository).getSubscribers()))
+        assertThat((((InMemoryMemberRepository) memberRepository).getSubscribers()))
                 .usingElementComparatorIgnoringFields()
-                .containsExactly(Subscriber.createStudent(subscriberId, email));
+                .containsExactly(Member.createStudent(memberId, email));
     }
 }
