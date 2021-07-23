@@ -1,5 +1,8 @@
 package com.gym.use_case;
 
+import com.gym.domain.membership.Email;
+import com.gym.domain.membership.Subscriber;
+import com.gym.domain.membership.SubscriberId;
 import com.gym.domain.subscriber.*;
 import com.gym.domain.subscription.*;
 import com.gym.infrastructure.InMemorySubscriptionPlanRepository;
@@ -19,6 +22,7 @@ class RenewMonthlySubscriptionUTest {
 
     private static final Clock LAST_MONTH = Clock.fixed(Instant.parse("2021-06-21T12:00:00.00Z"), ZoneId.systemDefault());
     private static final Clock NOW = Clock.fixed(Instant.parse("2021-07-21T12:00:00.00Z"), ZoneId.systemDefault());
+    private final Email email = new Email("test@email.com");
 
     @Test
     void execute_should_automatically_renew_monthly_subscription() {
@@ -34,7 +38,7 @@ class RenewMonthlySubscriptionUTest {
                 monthlySubscriptionPlanId,
                 Period.Montly,
                 new TotalPrice(80d),
-                Subscriber.createRegular(new SubscriberId(UUID.randomUUID())),
+                Subscriber.createRegular(new SubscriberId(UUID.randomUUID()), email),
                 LAST_MONTH);
         ((InMemorySubscriptionRepository) subscriptionRepository).addSubscriptions(Collections.singletonList(monthlySubscriptionToRenew));
 
@@ -62,7 +66,7 @@ class RenewMonthlySubscriptionUTest {
                 yearlySubscriptionPlanId,
                 Period.Yearly,
                 new TotalPrice(100d),
-                Subscriber.createRegular(new SubscriberId(UUID.randomUUID())),
+                Subscriber.createRegular(new SubscriberId(UUID.randomUUID()), email),
                 LAST_MONTH);
         final SubscriptionRepository subscriptionRepository = new InMemorySubscriptionRepository(UUID.randomUUID());
         ((InMemorySubscriptionRepository) subscriptionRepository).addSubscriptions(Collections.singletonList(yearlySubscription));

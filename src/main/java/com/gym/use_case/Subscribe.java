@@ -1,5 +1,6 @@
 package com.gym.use_case;
 
+import com.gym.domain.membership.Subscriber;
 import com.gym.domain.subscriber.*;
 import com.gym.domain.subscription.*;
 

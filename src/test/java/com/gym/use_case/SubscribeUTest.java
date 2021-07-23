@@ -1,5 +1,8 @@
 package com.gym.use_case;
 
+import com.gym.domain.membership.Email;
+import com.gym.domain.membership.Subscriber;
+import com.gym.domain.membership.SubscriberId;
 import com.gym.domain.subscriber.*;
 import com.gym.domain.subscription.*;
 import com.gym.infrastructure.InMemorySubscriptionPlanRepository;
@@ -34,7 +37,7 @@ public class SubscribeUTest {
         @Test
         void save_new_subscription() {
             final Subscribe subscribe = new Subscribe(subscriptionPlanRepository, subscriptionRepository, clock);
-            final Subscriber subscriber = Subscriber.createRegular(new SubscriberId(UUID.randomUUID()));
+            final Subscriber subscriber = Subscriber.createRegular(new SubscriberId(UUID.randomUUID()), new Email("test@email.com"));
 
             subscribe.execute(subscriber, subscriptionPlanId);
 

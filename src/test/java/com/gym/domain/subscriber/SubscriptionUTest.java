@@ -1,5 +1,8 @@
 package com.gym.domain.subscriber;
 
+import com.gym.domain.membership.Email;
+import com.gym.domain.membership.Subscriber;
+import com.gym.domain.membership.SubscriberId;
 import com.gym.domain.subscription.Period;
 import com.gym.domain.subscription.SubscriptionPlanId;
 import com.gym.domain.subscription.TotalPrice;
@@ -22,6 +25,7 @@ public class SubscriptionUTest {
     public static final LocalDate TODAY = LocalDate.now(clock);
     public static final LocalDate IN_ONE_MONTH = TODAY.plusMonths(1);
     public static final LocalDate IN_ONE_YEAR = TODAY.plusYears(1);
+    private Email email = new Email("my-email@email.com");
 
     @Nested
     class SubscribeShould {
@@ -30,7 +34,7 @@ public class SubscriptionUTest {
             final SubscriptionPlanId subscriptionPlanId = new SubscriptionPlanId(UUID.randomUUID());
             final TotalPrice totalPrice = new TotalPrice(10d);
             final SubscriberId subscriberId = new SubscriberId(UUID.randomUUID());
-            final Subscriber subscriber = Subscriber.createRegular(subscriberId);
+            final Subscriber subscriber = Subscriber.createRegular(subscriberId, email);
 
             final Subscription subscription = Subscription.subscribe(subscriptionId, subscriptionPlanId, MONTHLY_PERIOD, totalPrice, subscriber, clock);
 
@@ -45,7 +49,7 @@ public class SubscriptionUTest {
             final SubscriptionPlanId subscriptionPlanId = new SubscriptionPlanId(UUID.randomUUID());
             final TotalPrice totalPrice = new TotalPrice(100d);
             final SubscriberId subscriberId = new SubscriberId(UUID.randomUUID());
-            final Subscriber subscriber = Subscriber.createStudent(subscriberId);
+            final Subscriber subscriber = Subscriber.createStudent(subscriberId, email);
 
             final Subscription subscription = Subscription.subscribe(subscriptionId, subscriptionPlanId, MONTHLY_PERIOD, totalPrice, subscriber, clock);
 
@@ -60,7 +64,7 @@ public class SubscriptionUTest {
             final SubscriptionPlanId subscriptionPlanId = new SubscriptionPlanId(UUID.randomUUID());
             final TotalPrice totalPrice = new TotalPrice(10d);
             final SubscriberId subscriberId = new SubscriberId(UUID.randomUUID());
-            final Subscriber subscriber = Subscriber.createRegular(subscriberId);
+            final Subscriber subscriber = Subscriber.createRegular(subscriberId, email);
 
             final Subscription subscription = Subscription.subscribe(subscriptionId, subscriptionPlanId, MONTHLY_PERIOD, totalPrice, subscriber, clock);
 
@@ -71,7 +75,7 @@ public class SubscriptionUTest {
             final SubscriptionPlanId subscriptionPlanId = new SubscriptionPlanId(UUID.randomUUID());
             final TotalPrice totalPrice = new TotalPrice(10d);
             final SubscriberId subscriberId = new SubscriberId(UUID.randomUUID());
-            final Subscriber subscriber = Subscriber.createRegular(subscriberId);
+            final Subscriber subscriber = Subscriber.createRegular(subscriberId, email);
 
             final Subscription subscription = Subscription.subscribe(subscriptionId, subscriptionPlanId, YEARLY_PERIOD, totalPrice, subscriber, clock);
 
