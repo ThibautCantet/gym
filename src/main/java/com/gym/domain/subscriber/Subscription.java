@@ -12,7 +12,7 @@ public class Subscription {
     private final SubscriptionPlanId subscriptionPlanId;
     private final Period period;
     private final SubscriberId subscriberId;
-    private SubscriptionDate subscriptionDate;
+    private final SubscriptionDate subscriptionDate;
     private final Price price;
 
     private Subscription(SubscriptionId subscriptionId,
@@ -28,6 +28,15 @@ public class Subscription {
         final LocalDate today = LocalDate.now(clock);
         this.subscriptionDate = initializeSubscriptionDate(today, period);
         this.price = initializePriceWithDiscount(totalPrice, subscriber);
+    }
+
+    private Subscription(SubscriptionId subscriptionId, SubscriptionPlanId subscriptionPlanId, Period period, SubscriberId subscriberId, SubscriptionDate subscriptionDate, Price price) {
+        this.subscriptionId = subscriptionId;
+        this.subscriptionPlanId = subscriptionPlanId;
+        this.period = period;
+        this.subscriberId = subscriberId;
+        this.subscriptionDate = subscriptionDate;
+        this.price = price;
     }
 
     private SubscriptionDate initializeSubscriptionDate(LocalDate today, Period period) {
@@ -72,7 +81,12 @@ public class Subscription {
         return period.equals(Period.Montly) && isOnGoing(date);
     }
 
-    public void renew() {
-        subscriptionDate = subscriptionDate.renew();
+    public Subscription renew() {
+        return  new Subscription(this.subscriptionId,
+        this.subscriptionPlanId,
+        this.period,
+        this.subscriberId,
+        this.subscriptionDate.renew(),
+        this.price);
     }
 }

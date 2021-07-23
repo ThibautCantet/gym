@@ -20,9 +20,8 @@ public class RenewMonthlySubscription {
     public void execute() {
         final List<Subscription> subscriptionsToRenew = subscriptionRepository.findAll().stream()
                 .filter(subscription -> subscription.isToRenew(LocalDate.now(clock)))
+                .map(Subscription::renew)
                 .collect(Collectors.toList());
-        subscriptionsToRenew
-                .forEach(Subscription::renew);
 
         subscriptionRepository.saveAll(subscriptionsToRenew);
     }

@@ -4,7 +4,6 @@ import com.gym.domain.subscriber.Subscription;
 import com.gym.domain.subscriber.SubscriptionId;
 import com.gym.domain.subscriber.SubscriptionRepository;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -20,6 +19,10 @@ public class InMemorySubscriptionRepository implements SubscriptionRepository {
     @Override
     public SubscriptionId next() {
         return new SubscriptionId(fixedUUID);
+    }
+
+    public Subscription findById(SubscriptionId subscriptionId) {
+        return subscriptions.get(subscriptionId);
     }
 
     @Override
