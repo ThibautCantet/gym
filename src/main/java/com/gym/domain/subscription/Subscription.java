@@ -1,7 +1,7 @@
 package com.gym.domain.subscription;
 
-import com.gym.domain.membership.Member;
-import com.gym.domain.membership.MemberId;
+import com.gym.membership.domain.Member;
+import com.gym.membership.domain.MemberId;
 import com.gym.domain.subscription_plan.Period;
 import com.gym.domain.subscription_plan.SubscriptionPlanId;
 import com.gym.domain.subscription_plan.TotalPrice;

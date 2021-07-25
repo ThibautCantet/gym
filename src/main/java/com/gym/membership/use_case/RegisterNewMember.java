@@ -1,10 +1,10 @@
-package com.gym.use_case;
+package com.gym.membership.use_case;
 
-import com.gym.domain.membership.Email;
-import com.gym.domain.membership.Mailer;
-import com.gym.domain.membership.MemberRepository;
-import com.gym.domain.membership.Member;
-import com.gym.domain.membership.MemberId;
+import com.gym.membership.domain.Email;
+import com.gym.membership.domain.Mailer;
+import com.gym.membership.domain.MemberRepository;
+import com.gym.membership.domain.Member;
+import com.gym.membership.domain.MemberId;
 
 public class RegisterNewMember {
     private final MemberRepository memberRepository;

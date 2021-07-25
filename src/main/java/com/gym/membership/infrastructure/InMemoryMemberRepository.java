@@ -1,8 +1,8 @@
-package com.gym.infrastructure;
+package com.gym.membership.infrastructure;
 
-import com.gym.domain.membership.MemberRepository;
-import com.gym.domain.membership.Member;
-import com.gym.domain.membership.MemberId;
+import com.gym.membership.domain.MemberRepository;
+import com.gym.membership.domain.Member;
+import com.gym.membership.domain.MemberId;
 
 import java.util.HashMap;
 import java.util.List;

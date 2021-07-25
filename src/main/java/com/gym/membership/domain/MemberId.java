@@ -1,4 +1,4 @@
-package com.gym.domain.membership;
+package com.gym.membership.domain;
 
 import java.util.UUID;
 
