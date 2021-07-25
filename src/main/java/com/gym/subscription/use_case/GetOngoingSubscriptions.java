@@ -1,8 +1,8 @@
-package com.gym.use_case;
+package com.gym.subscription.use_case;
 
-import com.gym.domain.subscription.Price;
-import com.gym.domain.subscription.Subscription;
-import com.gym.domain.subscription.SubscriptionRepository;
+import com.gym.subscription.domain.Price;
+import com.gym.subscription.domain.Subscription;
+import com.gym.subscription.domain.SubscriptionRepository;
 
 import java.time.LocalDate;
 

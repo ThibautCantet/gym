@@ -1,4 +1,4 @@
-package com.gym.domain.subscription;
+package com.gym.subscription.domain;
 
 import com.gym.membership.domain.Member;
 import com.gym.membership.domain.MemberId;

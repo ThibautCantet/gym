@@ -1,7 +1,9 @@
-package com.gym.use_case;
+package com.gym.subscription.use_case;
 
+import com.gym.subscription.domain.Subscription;
+import com.gym.subscription.domain.SubscriptionId;
+import com.gym.subscription.domain.SubscriptionRepository;
 import com.gym.membership.domain.Member;
-import com.gym.domain.subscription.*;
 import com.gym.domain.subscription_plan.*;
 
 import java.time.Clock;

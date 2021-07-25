@@ -1,8 +1,8 @@
-package com.gym.infrastructure;
+package com.gym.subscription.infrastructure;
 
-import com.gym.domain.subscription.Subscription;
-import com.gym.domain.subscription.SubscriptionId;
-import com.gym.domain.subscription.SubscriptionRepository;
+import com.gym.subscription.domain.Subscription;
+import com.gym.subscription.domain.SubscriptionId;
+import com.gym.subscription.domain.SubscriptionRepository;
 
 import java.util.HashMap;
 import java.util.List;

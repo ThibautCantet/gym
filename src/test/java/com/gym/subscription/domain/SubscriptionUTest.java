@@ -1,5 +1,9 @@
-package com.gym.domain.subscription;
+package com.gym.subscription.domain;
 
+import com.gym.subscription.domain.Price;
+import com.gym.subscription.domain.Subscription;
+import com.gym.subscription.domain.SubscriptionDate;
+import com.gym.subscription.domain.SubscriptionId;
 import com.gym.membership.domain.Email;
 import com.gym.membership.domain.Member;
 import com.gym.membership.domain.MemberId;

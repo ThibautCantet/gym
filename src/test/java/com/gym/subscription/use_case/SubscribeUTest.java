@@ -1,12 +1,15 @@
-package com.gym.use_case;
+package com.gym.subscription.use_case;
 
+import com.gym.subscription.domain.Subscription;
+import com.gym.subscription.domain.SubscriptionId;
+import com.gym.subscription.domain.SubscriptionRepository;
+import com.gym.subscription.use_case.Subscribe;
 import com.gym.membership.domain.Email;
 import com.gym.membership.domain.Member;
 import com.gym.membership.domain.MemberId;
-import com.gym.domain.subscription.*;
 import com.gym.domain.subscription_plan.*;
 import com.gym.infrastructure.InMemorySubscriptionPlanRepository;
-import com.gym.infrastructure.InMemorySubscriptionRepository;
+import com.gym.subscription.infrastructure.InMemorySubscriptionRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
