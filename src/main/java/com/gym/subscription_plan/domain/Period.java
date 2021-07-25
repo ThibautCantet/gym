@@ -1,4 +1,4 @@
-package com.gym.domain.subscription_plan;
+package com.gym.subscription_plan.domain;
 
 public enum Period {
     Montly,

@@ -1,4 +1,4 @@
-package com.gym.domain.subscription_plan;
+package com.gym.subscription_plan.domain;
 
 public record DiscountRate(Double rate) {
     public DiscountRate(Period period) {

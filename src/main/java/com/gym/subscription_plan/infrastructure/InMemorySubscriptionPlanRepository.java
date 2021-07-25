@@ -1,8 +1,8 @@
-package com.gym.infrastructure;
+package com.gym.subscription_plan.infrastructure;
 
-import com.gym.domain.subscription_plan.SubscriptionPlan;
-import com.gym.domain.subscription_plan.SubscriptionPlanId;
-import com.gym.domain.subscription_plan.SubscriptionPlanRepository;
+import com.gym.subscription_plan.domain.SubscriptionPlan;
+import com.gym.subscription_plan.domain.SubscriptionPlanId;
+import com.gym.subscription_plan.domain.SubscriptionPlanRepository;
 
 import java.util.ArrayList;
 import java.util.List;

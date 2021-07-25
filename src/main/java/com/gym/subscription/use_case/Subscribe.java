@@ -4,7 +4,7 @@ import com.gym.subscription.domain.Subscription;
 import com.gym.subscription.domain.SubscriptionId;
 import com.gym.subscription.domain.SubscriptionRepository;
 import com.gym.membership.domain.Member;
-import com.gym.domain.subscription_plan.*;
+import com.gym.subscription_plan.domain.*;
 
 import java.time.Clock;
 

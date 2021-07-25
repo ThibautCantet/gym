@@ -1,6 +1,6 @@
-package com.gym.use_case;
+package com.gym.subscription_plan.use_case;
 
-import com.gym.domain.subscription_plan.*;
+import com.gym.subscription_plan.domain.*;
 
 public class CreateSubscriptionPlan {
     private final SubscriptionPlanRepository subscriptionPlanRepository;

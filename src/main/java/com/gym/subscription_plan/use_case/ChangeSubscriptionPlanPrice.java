@@ -1,9 +1,9 @@
-package com.gym.use_case;
+package com.gym.subscription_plan.use_case;
 
-import com.gym.domain.subscription_plan.BasePrice;
-import com.gym.domain.subscription_plan.SubscriptionPlan;
-import com.gym.domain.subscription_plan.SubscriptionPlanId;
-import com.gym.domain.subscription_plan.SubscriptionPlanRepository;
+import com.gym.subscription_plan.domain.BasePrice;
+import com.gym.subscription_plan.domain.SubscriptionPlan;
+import com.gym.subscription_plan.domain.SubscriptionPlanId;
+import com.gym.subscription_plan.domain.SubscriptionPlanRepository;
 
 public class ChangeSubscriptionPlanPrice {
     private final SubscriptionPlanRepository subscriptionPlanRepository;

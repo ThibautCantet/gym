@@ -3,13 +3,12 @@ package com.gym.subscription.use_case;
 import com.gym.subscription.domain.Subscription;
 import com.gym.subscription.domain.SubscriptionId;
 import com.gym.subscription.domain.SubscriptionRepository;
-import com.gym.subscription.use_case.GetOngoingSubscriptions;
 import com.gym.membership.domain.Email;
 import com.gym.membership.domain.Member;
 import com.gym.membership.domain.MemberId;
-import com.gym.domain.subscription_plan.Period;
-import com.gym.domain.subscription_plan.SubscriptionPlanId;
-import com.gym.domain.subscription_plan.TotalPrice;
+import com.gym.subscription_plan.domain.Period;
+import com.gym.subscription_plan.domain.SubscriptionPlanId;
+import com.gym.subscription_plan.domain.TotalPrice;
 import com.gym.subscription.infrastructure.InMemorySubscriptionRepository;
 import org.junit.jupiter.api.Test;
 

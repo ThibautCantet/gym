@@ -1,7 +1,7 @@
-package com.gym.use_case;
+package com.gym.subscription_plan.use_case;
 
-import com.gym.domain.subscription_plan.*;
-import com.gym.infrastructure.InMemorySubscriptionPlanRepository;
+import com.gym.subscription_plan.domain.*;
+import com.gym.subscription_plan.infrastructure.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;

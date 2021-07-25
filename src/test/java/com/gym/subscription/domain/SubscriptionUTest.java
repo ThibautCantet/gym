@@ -7,9 +7,9 @@ import com.gym.subscription.domain.SubscriptionId;
 import com.gym.membership.domain.Email;
 import com.gym.membership.domain.Member;
 import com.gym.membership.domain.MemberId;
-import com.gym.domain.subscription_plan.Period;
-import com.gym.domain.subscription_plan.SubscriptionPlanId;
-import com.gym.domain.subscription_plan.TotalPrice;
+import com.gym.subscription_plan.domain.Period;
+import com.gym.subscription_plan.domain.SubscriptionPlanId;
+import com.gym.subscription_plan.domain.TotalPrice;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 

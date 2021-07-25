@@ -4,12 +4,11 @@ import com.gym.subscription.domain.Subscription;
 import com.gym.subscription.domain.SubscriptionDate;
 import com.gym.subscription.domain.SubscriptionId;
 import com.gym.subscription.domain.SubscriptionRepository;
-import com.gym.subscription.use_case.RenewMonthlySubscription;
 import com.gym.membership.domain.Email;
 import com.gym.membership.domain.Member;
 import com.gym.membership.domain.MemberId;
-import com.gym.domain.subscription_plan.*;
-import com.gym.infrastructure.InMemorySubscriptionPlanRepository;
+import com.gym.subscription_plan.domain.*;
+import com.gym.subscription_plan.infrastructure.*;
 import com.gym.subscription.infrastructure.InMemorySubscriptionRepository;
 import org.junit.jupiter.api.Test;
 
