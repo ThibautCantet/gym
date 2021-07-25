@@ -4,7 +4,7 @@ public class DiscountRate {
     private final Double value;
 
     public DiscountRate(Period period) {
-        value = period.equals(Period.Montly) ? 0d: 10d;
+        value = period.equals(Period.Monthly) ? 0d: 10d;
     }
 
     public DiscountRate(Double value) {

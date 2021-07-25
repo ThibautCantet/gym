@@ -21,7 +21,7 @@ public class SubscribeUTest {
     public void execute_should_save_new_monthly_subscription_with_20_percent_discount_when_subscriber_is_a_student() {
         SubscriptionRepository subscriptionRepository = new InMemorySubscriptionRepository();
         final Subscribe subscribe = new Subscribe(subscriptionRepository);
-        final SubscriptionPlan subscriptionPlan = new SubscriptionPlan(new BasePrice(100d), Period.Montly);
+        final SubscriptionPlan subscriptionPlan = new SubscriptionPlan(new BasePrice(100d), Period.Monthly);
         final Subscriber subscriber = Subscriber.createStudent();
 
         subscribe.execute(subscriptionPlan, subscriber);
@@ -40,7 +40,7 @@ public class SubscribeUTest {
     public void execute_should_save_new_monthly_subscription_without_discount_when_subscriber_is_not_a_student() {
         SubscriptionRepository subscriptionRepository = new InMemorySubscriptionRepository();
         final Subscribe subscribe = new Subscribe(subscriptionRepository);
-        final SubscriptionPlan subscriptionPlan = new SubscriptionPlan(new BasePrice(100d), Period.Montly);
+        final SubscriptionPlan subscriptionPlan = new SubscriptionPlan(new BasePrice(100d), Period.Monthly);
         final Subscriber subscriber = Subscriber.createStandard();
 
         subscribe.execute(subscriptionPlan, subscriber);

@@ -13,7 +13,7 @@ public class CreateSubscriptionPlanUTest {
         final InMemorySubscriptionPlanRepository subscriptionPlanRepository = new InMemorySubscriptionPlanRepository();
         final CreateSubscriptionPlan createSubscriptionPlan = new CreateSubscriptionPlan(subscriptionPlanRepository);
         final BasePrice basePrice = new BasePrice(10d);
-        final Period period = Period.Montly;
+        final Period period = Period.Monthly;
 
         createSubscriptionPlan.execute(basePrice, period);
 
@@ -25,7 +25,7 @@ public class CreateSubscriptionPlanUTest {
         assertThat(subscriptionPlan.getBasePrice()).isEqualTo(basePrice);
         assertThat(subscriptionPlan.getTotalPrice()).isEqualTo(new TotalPrice(basePrice.amount()));
         assertThat(subscriptionPlan.getPeriod()).isEqualTo(period);
-        assertThat(subscriptionPlan.getDiscountRate()).isEqualToComparingFieldByField(new DiscountRate(Period.Montly));
+        assertThat(subscriptionPlan.getDiscountRate()).isEqualToComparingFieldByField(new DiscountRate(Period.Monthly));
     }
 
     @Test
