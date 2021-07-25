@@ -6,7 +6,7 @@ public record DiscountRate(Double rate) {
     }
 
     private static double initializeRate(Period period) {
-        return period.equals(Period.Montly) ? 0d : 10d;
+        return period.equals(Period.Monthly) ? 0d : 10d;
     }
 
     public double getRate() {

@@ -39,7 +39,7 @@ class RenewMonthlySubscriptionUTest {
         final Subscription monthlySubscriptionToRenew = Subscription.subscribe(
                 monthlySubscriptionId,
                 monthlySubscriptionPlanId,
-                Period.Montly,
+                Period.Monthly,
                 new TotalPrice(80d),
                 Member.createRegular(new MemberId(UUID.randomUUID()), email),
                 LAST_MONTH);

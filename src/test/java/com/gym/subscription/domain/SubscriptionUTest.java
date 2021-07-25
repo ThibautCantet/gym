@@ -1,9 +1,5 @@
 package com.gym.subscription.domain;
 
-import com.gym.subscription.domain.Price;
-import com.gym.subscription.domain.Subscription;
-import com.gym.subscription.domain.SubscriptionDate;
-import com.gym.subscription.domain.SubscriptionId;
 import com.gym.membership.domain.Email;
 import com.gym.membership.domain.Member;
 import com.gym.membership.domain.MemberId;
@@ -23,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class SubscriptionUTest {
     private static final Clock clock = Clock.fixed(Instant.ofEpochSecond(3600), ZoneId.systemDefault());
-    private static final Period MONTHLY_PERIOD = Period.Montly;
+    private static final Period MONTHLY_PERIOD = Period.Monthly;
     private static final Period YEARLY_PERIOD = Period.Yearly;
     private final SubscriptionId subscriptionId = new SubscriptionId(UUID.randomUUID());
     public static final LocalDate TODAY = LocalDate.now(clock);

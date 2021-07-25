@@ -26,7 +26,7 @@ class GetOngoingSubscriptionsUTest {
     private static final Clock TWO_MONTH_AGO = Clock.fixed(Instant.parse("2021-01-10T16:00:00.00Z"), ZoneId.systemDefault());
     private static final Clock LAST_MONTH = Clock.fixed(Instant.parse("2021-02-19T16:00:00.00Z"), ZoneId.systemDefault());
     private static final Clock NOW = Clock.fixed(Instant.parse("2021-03-09T16:00:00.00Z"), ZoneId.systemDefault());
-    private static final Period MONTHLY_PERIOD = Period.Montly;
+    private static final Period MONTHLY_PERIOD = Period.Monthly;
     private final Email email = new Email("test@email.com");
 
     @Test

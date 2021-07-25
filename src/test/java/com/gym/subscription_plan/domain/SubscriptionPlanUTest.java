@@ -23,7 +23,7 @@ public class SubscriptionPlanUTest {
             assertThat(subscriptionPlan.getId()).isEqualTo(subscriptionPlanId);
             assertThat(subscriptionPlan.getBasePrice()).isEqualTo(basePrice);
             assertThat(subscriptionPlan.getTotalPrice()).isEqualTo(new TotalPrice(basePriceValue));
-            assertThat(subscriptionPlan.getPeriod()).isEqualTo(Period.Montly);
+            assertThat(subscriptionPlan.getPeriod()).isEqualTo(Period.Monthly);
             assertThat(subscriptionPlan.getDiscountRate()).isEqualTo(new DiscountRate(0d));
         }
 

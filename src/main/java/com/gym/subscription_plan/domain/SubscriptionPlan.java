@@ -16,7 +16,7 @@ public class SubscriptionPlan {
     }
 
     public static SubscriptionPlan createMonthly(SubscriptionPlanId subscriptionPlanId, BasePrice basePrice) {
-        return new SubscriptionPlan(subscriptionPlanId, basePrice, Period.Montly);
+        return new SubscriptionPlan(subscriptionPlanId, basePrice, Period.Monthly);
     }
 
     public static SubscriptionPlan createYearly(SubscriptionPlanId subscriptionPlanId, BasePrice basePrice) {

@@ -42,7 +42,7 @@ public class Subscription {
     }
 
     private SubscriptionDate initializeSubscriptionDate(LocalDate today, Period period) {
-        final LocalDate endDate = period.equals(Period.Montly) ? today.plusMonths(1) : today.plusYears(1);
+        final LocalDate endDate = period.equals(Period.Monthly) ? today.plusMonths(1) : today.plusYears(1);
         return new SubscriptionDate(today, endDate);
     }
 
@@ -80,7 +80,7 @@ public class Subscription {
     }
 
     public boolean isToRenew(LocalDate date) {
-        return period.equals(Period.Montly) && isOnGoing(date);
+        return period.equals(Period.Monthly) && isOnGoing(date);
     }
 
     public Subscription renew() {

@@ -22,7 +22,7 @@ public class CreateSubscriptionPlanUTest {
         final CreateSubscriptionPlan createSubscriptionPlan = new CreateSubscriptionPlan(subscriptionPlanRepository);
         final double basePriceValue = 10d;
         final BasePrice basePrice = new BasePrice(basePriceValue);
-        final Period period = Period.Montly;
+        final Period period = Period.Monthly;
 
         createSubscriptionPlan.execute(basePrice, period);
 
