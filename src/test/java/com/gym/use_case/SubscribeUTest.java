@@ -11,6 +11,7 @@ import com.gym.domain.subscription_plan.SubscriptionPlan;
 import com.gym.infrastructure.InMemorySubscriptionRepository;
 import org.junit.Test;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,13 +24,14 @@ public class SubscribeUTest {
         final Subscribe subscribe = new Subscribe(subscriptionRepository);
         final SubscriptionPlan subscriptionPlan = new SubscriptionPlan(new BasePrice(100d), Period.Monthly);
         final Subscriber subscriber = Subscriber.createStudent();
+        final LocalDate date = LocalDate.now();
 
         subscribe.execute(subscriptionPlan, subscriber);
 
         final List<Subscription> subscriptions = ((InMemorySubscriptionRepository) subscriptionRepository).getSubscriptions();
         assertThat(subscriptions)
                 .usingElementComparatorIgnoringFields("subscriptionPlan", "subscriber", "discountRate")
-                .containsExactly(new Subscription(subscriptionPlan, subscriber));
+                .containsExactly(new Subscription(subscriptionPlan, subscriber, date));
 
         final Subscription subscription = subscriptions.get(0);
         assertThat(subscription.getDiscountRate()).isEqualToComparingFieldByField(new DiscountRate(20d));
@@ -42,13 +44,14 @@ public class SubscribeUTest {
         final Subscribe subscribe = new Subscribe(subscriptionRepository);
         final SubscriptionPlan subscriptionPlan = new SubscriptionPlan(new BasePrice(100d), Period.Monthly);
         final Subscriber subscriber = Subscriber.createStandard();
+        final LocalDate date = LocalDate.now();
 
         subscribe.execute(subscriptionPlan, subscriber);
 
         final List<Subscription> subscriptions = ((InMemorySubscriptionRepository) subscriptionRepository).getSubscriptions();
         assertThat(subscriptions)
                 .usingElementComparatorIgnoringFields("subscriptionPlan", "subscriber", "discountRate")
-                .containsExactly(new Subscription(subscriptionPlan, subscriber));
+                .containsExactly(new Subscription(subscriptionPlan, subscriber, date));
 
         final Subscription subscription = subscriptions.get(0);
         assertThat(subscription.getDiscountRate()).isEqualToComparingFieldByField(new DiscountRate(0d));
@@ -61,13 +64,14 @@ public class SubscribeUTest {
         final Subscribe subscribe = new Subscribe(subscriptionRepository);
         final SubscriptionPlan subscriptionPlan = new SubscriptionPlan(new BasePrice(100d), Period.Yearly);
         final Subscriber subscriber = Subscriber.createStandard();
+        final LocalDate date = LocalDate.now();
 
         subscribe.execute(subscriptionPlan, subscriber);
 
         final List<Subscription> subscriptions = ((InMemorySubscriptionRepository) subscriptionRepository).getSubscriptions();
         assertThat(subscriptions)
                 .usingElementComparatorIgnoringFields("subscriptionPlan", "subscriber", "discountRate")
-                .containsExactly(new Subscription(subscriptionPlan, subscriber));
+                .containsExactly(new Subscription(subscriptionPlan, subscriber, date));
 
         final Subscription subscription = subscriptions.get(0);
         assertThat(subscription.getDiscountRate()).isEqualToComparingFieldByField(new DiscountRate(10d));

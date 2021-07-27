@@ -17,4 +17,9 @@ public class InMemorySubscriptionRepository implements SubscriptionRepository {
     public void save(Subscription subscription) {
         subscriptions.add(subscription);
     }
+
+    @Override
+    public List<Subscription> findAll() {
+        return subscriptions;
+    }
 }

@@ -5,6 +5,8 @@ import com.gym.domain.subscriber.Subscription;
 import com.gym.domain.subscriber.SubscriptionRepository;
 import com.gym.domain.subscription_plan.SubscriptionPlan;
 
+import java.time.LocalDate;
+
 public class Subscribe {
 
     private final SubscriptionRepository subscriptionRepository;
@@ -14,6 +16,6 @@ public class Subscribe {
     }
 
     public void execute(SubscriptionPlan subscriptionPlan, Subscriber subscriber) {
-        subscriptionRepository.save(new Subscription(subscriptionPlan, subscriber));
+        subscriptionRepository.save(new Subscription(subscriptionPlan, subscriber, LocalDate.now()));
     }
 }
