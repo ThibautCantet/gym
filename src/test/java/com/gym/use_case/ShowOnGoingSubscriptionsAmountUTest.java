@@ -16,42 +16,42 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ShowOnGoingSubscriptionsAmountUTest {
 
+    public static final Month MONTH = Month.JULY;
+    public static final int YEAR = 2021;
+    private final SubscriptionRepository subscriptionRepository = new InMemorySubscriptionRepository();
+
     @Test
     public void execute_should_return_zero_when_no_on_going_subscription() {
-        final SubscriptionRepository subscriptionRepository = new InMemorySubscriptionRepository();
-
+        // given
         final ShowOnGoingSubscriptionsAmount showOnGoingSubscriptionsAmount = new ShowOnGoingSubscriptionsAmount(subscriptionRepository);
-        final Month month = Month.JULY;
-        final int year = 2021;
 
-        final Double result = showOnGoingSubscriptionsAmount.execute(month, year);
+        // when
+        final Double result = showOnGoingSubscriptionsAmount.execute(MONTH, YEAR);
 
+        // then
         assertThat(result).isEqualTo(0d);
     }
 
     @Test
     public void execute_should_return_ongoing_subscriptions_for_a_given_month() {
-        final SubscriptionRepository subscriptionRepository = new InMemorySubscriptionRepository();
-
+        // given
         Subscriber subscriber = Subscriber.createStandard();
-
-        SubscriptionPlan monthlySubscriptionPlan = new SubscriptionPlan(new BasePrice(90d), Period.Monthly);
-        LocalDate january = LocalDate.of(2021, Month.JANUARY, 1);
-        final Subscription januaryMonthlySubscription = new Subscription(monthlySubscriptionPlan, subscriber, january);
-        ((InMemorySubscriptionRepository) subscriptionRepository).getSubscriptions().add(januaryMonthlySubscription);
-
-        LocalDate july = LocalDate.of(2021, Month.JULY, 1);
-        SubscriptionPlan monthlySubscriptionPlan2 = new SubscriptionPlan(new BasePrice(100d), Period.Monthly);
-        final Subscription julyMonthlySubscription = new Subscription(monthlySubscriptionPlan2, subscriber, july);
-        ((InMemorySubscriptionRepository) subscriptionRepository).getSubscriptions().add(julyMonthlySubscription);
-
+        createSubscription(subscriber, 90d, Month.JANUARY);
+        createSubscription(subscriber, 100d, Month.JULY);
         final ShowOnGoingSubscriptionsAmount showOnGoingSubscriptionsAmount = new ShowOnGoingSubscriptionsAmount(subscriptionRepository);
-        final Month month = Month.JULY;
-        final int year = 2021;
 
-        final Double result = showOnGoingSubscriptionsAmount.execute(month, year);
+        // when
+        final Double result = showOnGoingSubscriptionsAmount.execute(MONTH, YEAR);
 
+        // then
         final double expectedOngoingSubscriptions = 100d;
         assertThat(result).isEqualTo(expectedOngoingSubscriptions);
+    }
+
+    private void createSubscription(Subscriber subscriber, double basePrice, Month month) {
+        SubscriptionPlan monthlySubscriptionPlan = new SubscriptionPlan(new BasePrice(basePrice), Period.Monthly);
+        LocalDate january = LocalDate.of(2021, month, 1);
+        final Subscription januaryMonthlySubscription = new Subscription(monthlySubscriptionPlan, subscriber, january);
+        ((InMemorySubscriptionRepository) subscriptionRepository).getSubscriptions().add(januaryMonthlySubscription);
     }
 }
