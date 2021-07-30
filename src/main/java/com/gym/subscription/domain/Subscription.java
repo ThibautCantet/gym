@@ -1,12 +1,14 @@
 package com.gym.subscription.domain;
 
+import com.gym.ddd.Aggregate;
+import com.gym.ddd.AggregateId;
 import com.gym.subscription_plan.domain.Period;
 import com.gym.subscription_plan.domain.TotalPrice;
 
 import java.time.Clock;
 import java.time.LocalDate;
 
-public class Subscription {
+public class Subscription implements Aggregate {
     private final SubscriptionId subscriptionId;
     private final Period period;
     private final SubscriptionDate subscriptionDate;
@@ -85,5 +87,10 @@ public class Subscription {
                 this.period,
                 this.subscriptionDate,
                 newPrice);
+    }
+
+    @Override
+    public AggregateId getId() {
+        return subscriptionId;
     }
 }

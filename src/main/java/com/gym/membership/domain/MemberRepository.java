@@ -1,6 +1,8 @@
 package com.gym.membership.domain;
 
-public interface MemberRepository {
+import com.gym.ddd.Repository;
+
+public interface MemberRepository extends Repository {
     MemberId next();
 
     void save(Member member);

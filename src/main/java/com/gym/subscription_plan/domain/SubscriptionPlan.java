@@ -1,6 +1,8 @@
 package com.gym.subscription_plan.domain;
 
-public class SubscriptionPlan {
+import com.gym.ddd.Aggregate;
+
+public class SubscriptionPlan implements Aggregate {
     private final SubscriptionPlanId id;
     private final BasePrice basePrice;
     private final Period period;

@@ -1,6 +1,8 @@
 package com.gym.membership.domain;
 
-public class Member {
+import com.gym.ddd.Aggregate;
+
+public class Member implements Aggregate {
     private final MemberId memberId;
     private final Email email;
     private final boolean isStudent;
