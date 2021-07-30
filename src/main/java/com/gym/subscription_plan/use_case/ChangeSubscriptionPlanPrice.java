@@ -11,9 +11,9 @@ public class ChangeSubscriptionPlanPrice {
         this.subscriptionPlanRepository = subscriptionPlanRepository;
     }
 
-    public void execute(SubscriptionPlanId subscriptionPlanId, double price) {
-        final SubscriptionPlan subscriptionPlan = subscriptionPlanRepository.findById(subscriptionPlanId);
-        final SubscriptionPlan updatedSubscriptionPlan = subscriptionPlan.changePrice(price);
+    public void handle(ChangeSubscriptionPlanPriceCommand changeSubscriptionPlanPriceCommand) {
+        final SubscriptionPlan subscriptionPlan = subscriptionPlanRepository.findById(new SubscriptionPlanId(changeSubscriptionPlanPriceCommand.subscriptionPlanId()));
+        final SubscriptionPlan updatedSubscriptionPlan = subscriptionPlan.changePrice(changeSubscriptionPlanPriceCommand.price());
 
         subscriptionPlanRepository.save(updatedSubscriptionPlan);
     }

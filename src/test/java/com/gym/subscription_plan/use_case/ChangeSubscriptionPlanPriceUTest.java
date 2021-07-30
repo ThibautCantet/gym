@@ -11,13 +11,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ChangeSubscriptionPlanPriceUTest {
 
     @Test
-    void execute_should_change_subscriptionPlan_price_when_monthly_plan() {
+    void handle_should_change_subscriptionPlan_price_when_monthly_plan() {
         final SubscriptionPlanRepository subscriptionPlanRepository = new InMemorySubscriptionPlanRepository(UUID.randomUUID());
-        final SubscriptionPlanId subscriptionPlanId = new SubscriptionPlanId(UUID.randomUUID());
-        ((InMemorySubscriptionPlanRepository) subscriptionPlanRepository).add(SubscriptionPlan.createMonthly(subscriptionPlanId, 90d));
+        final String subscriptionPlanId = UUID.randomUUID().toString();
+        ((InMemorySubscriptionPlanRepository) subscriptionPlanRepository).add(SubscriptionPlan.createMonthly(new SubscriptionPlanId(subscriptionPlanId), 90d));
         final ChangeSubscriptionPlanPrice changeSubscriptionPlanPrice = new ChangeSubscriptionPlanPrice(subscriptionPlanRepository);
+        final ChangeSubscriptionPlanPriceCommand changeSubscriptionPlanPriceCommand = new ChangeSubscriptionPlanPriceCommand(subscriptionPlanId, 100d);
 
-        changeSubscriptionPlanPrice.execute(subscriptionPlanId, 100d);
+        changeSubscriptionPlanPrice.handle(changeSubscriptionPlanPriceCommand);
 
         final SubscriptionPlan subscriptionPlan = ((InMemorySubscriptionPlanRepository) subscriptionPlanRepository).getAllSubscriptionPlan().get(0);
         assertThat(subscriptionPlan.getBasePrice()).isEqualTo(new BasePrice(100d));
@@ -25,13 +26,14 @@ class ChangeSubscriptionPlanPriceUTest {
     }
 
     @Test
-    void execute_should_change_subscriptionPlan_price_when_yearly_plan() {
+    void handle_should_change_subscriptionPlan_price_when_yearly_plan() {
         final SubscriptionPlanRepository subscriptionPlanRepository = new InMemorySubscriptionPlanRepository(UUID.randomUUID());
-        final SubscriptionPlanId subscriptionPlanId = new SubscriptionPlanId(UUID.randomUUID());
-        ((InMemorySubscriptionPlanRepository) subscriptionPlanRepository).add(SubscriptionPlan.createYearly(subscriptionPlanId, 20d));
+        final String subscriptionPlanId = UUID.randomUUID().toString();
+        ((InMemorySubscriptionPlanRepository) subscriptionPlanRepository).add(SubscriptionPlan.createYearly(new SubscriptionPlanId(subscriptionPlanId), 20d));
         final ChangeSubscriptionPlanPrice changeSubscriptionPlanPrice = new ChangeSubscriptionPlanPrice(subscriptionPlanRepository);
+        final ChangeSubscriptionPlanPriceCommand changeSubscriptionPlanPriceCommand = new ChangeSubscriptionPlanPriceCommand(subscriptionPlanId, 100d);
 
-        changeSubscriptionPlanPrice.execute(subscriptionPlanId,100d);
+        changeSubscriptionPlanPrice.handle(changeSubscriptionPlanPriceCommand);
 
         final SubscriptionPlan subscriptionPlan = ((InMemorySubscriptionPlanRepository) subscriptionPlanRepository).getAllSubscriptionPlan().get(0);
         assertThat(subscriptionPlan.getBasePrice()).isEqualTo(new BasePrice(100d));

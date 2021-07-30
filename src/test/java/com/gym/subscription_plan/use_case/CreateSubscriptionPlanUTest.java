@@ -16,13 +16,14 @@ public class CreateSubscriptionPlanUTest {
     private final SubscriptionPlanId subscriptionPlanId = new SubscriptionPlanId(fixedUUID);
 
     @Test
-    public void execute_should_save_new_monthly_subscription_plan() {
+    public void handle_should_save_new_monthly_subscription_plan() {
         final InMemorySubscriptionPlanRepository subscriptionPlanRepository = new InMemorySubscriptionPlanRepository(fixedUUID);
         final CreateSubscriptionPlan createSubscriptionPlan = new CreateSubscriptionPlan(subscriptionPlanRepository);
         final double basePrice = 10d;
         final Period period = Period.Monthly;
+        final CreateSubscriptionPlanCommand createSubscriptionPlanCommand = new CreateSubscriptionPlanCommand(basePrice, period);
 
-        createSubscriptionPlan.execute(basePrice, period);
+        createSubscriptionPlan.handle(createSubscriptionPlanCommand);
 
         assertThat(subscriptionPlanRepository.getAllSubscriptionPlan())
                 .usingFieldByFieldElementComparator()
@@ -30,13 +31,14 @@ public class CreateSubscriptionPlanUTest {
     }
 
     @Test
-    public void execute_should_apply_10_percent_discount_and_save_new_yearly_subscription_plan() {
+    public void handle_should_apply_10_percent_discount_and_save_new_yearly_subscription_plan() {
         final InMemorySubscriptionPlanRepository subscriptionPlanRepository = new InMemorySubscriptionPlanRepository(fixedUUID);
         final CreateSubscriptionPlan createSubscriptionPlan = new CreateSubscriptionPlan(subscriptionPlanRepository);
         final double basePrice = 10d;
         final Period period = Period.Yearly;
+        final CreateSubscriptionPlanCommand createSubscriptionPlanCommand = new CreateSubscriptionPlanCommand(basePrice, period);
 
-        createSubscriptionPlan.execute(basePrice, period);
+        createSubscriptionPlan.handle(createSubscriptionPlanCommand);
 
         assertThat(subscriptionPlanRepository.getAllSubscriptionPlan())
                 .usingFieldByFieldElementComparator()

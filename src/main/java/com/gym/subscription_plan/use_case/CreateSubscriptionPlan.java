@@ -9,14 +9,14 @@ public class CreateSubscriptionPlan {
         this.subscriptionPlanRepository = subscriptionPlanRepository;
     }
 
-    public void execute(double basePrice, Period period) {
+    public void handle(CreateSubscriptionPlanCommand createSubscriptionPlanCommand) {
         final SubscriptionPlanId subscriptionPlanId = subscriptionPlanRepository.next();
 
         SubscriptionPlan subscriptionPlan;
-        if (period.equals(Period.Yearly)) {
-            subscriptionPlan = SubscriptionPlan.createYearly(subscriptionPlanId, basePrice);
+        if (createSubscriptionPlanCommand.period().equals(Period.Yearly)) {
+            subscriptionPlan = SubscriptionPlan.createYearly(subscriptionPlanId, createSubscriptionPlanCommand.basePrice());
         } else {
-            subscriptionPlan = SubscriptionPlan.createMonthly(subscriptionPlanId, basePrice);
+            subscriptionPlan = SubscriptionPlan.createMonthly(subscriptionPlanId, createSubscriptionPlanCommand.basePrice());
         }
 
         subscriptionPlanRepository.save(subscriptionPlan);
