@@ -1,7 +1,5 @@
 package com.gym.subscription.domain;
 
-import com.gym.membership.domain.Member;
-import com.gym.membership.domain.MemberId;
 import com.gym.subscription_plan.domain.Period;
 import com.gym.subscription_plan.domain.TotalPrice;
 
@@ -11,31 +9,27 @@ import java.time.LocalDate;
 public class Subscription {
     private final SubscriptionId subscriptionId;
     private final Period period;
-    private final MemberId memberId;
     private final SubscriptionDate subscriptionDate;
     private final Price price;
 
     private Subscription(SubscriptionId subscriptionId,
                          Period period,
                          TotalPrice totalPrice,
-                         Member member,
+                         boolean isStudent,
                          Clock clock) {
         this.subscriptionId = subscriptionId;
         this.period = period;
-        this.memberId = member.getId();
         final LocalDate today = LocalDate.now(clock);
         this.subscriptionDate = initializeSubscriptionDate(today, period);
-        this.price = initializePriceWithDiscount(totalPrice, member);
+        this.price = initializePriceWithDiscount(totalPrice, isStudent);
     }
 
     private Subscription(SubscriptionId subscriptionId,
                          Period period,
-                         MemberId memberId,
                          SubscriptionDate subscriptionDate,
                          Price price) {
         this.subscriptionId = subscriptionId;
         this.period = period;
-        this.memberId = memberId;
         this.subscriptionDate = subscriptionDate;
         this.price = price;
     }
@@ -45,21 +39,17 @@ public class Subscription {
         return new SubscriptionDate(today, endDate);
     }
 
-    private Price initializePriceWithDiscount(TotalPrice totalPrice, Member member) {
+    private Price initializePriceWithDiscount(TotalPrice totalPrice, boolean isStudent) {
         final Price price = new Price(totalPrice.value());
-        return price.applyDiscount(member.isStudent());
+        return price.applyDiscount(isStudent);
     }
 
-    public static Subscription subscribe(SubscriptionId subscriptionId, Period monthlyPeriod, TotalPrice totalPrice, Member member, Clock clock) {
-        return new Subscription(subscriptionId, monthlyPeriod, totalPrice, member, clock);
+    public static Subscription subscribe(SubscriptionId subscriptionId, Period monthlyPeriod, TotalPrice totalPrice, boolean isStudent, Clock clock) {
+        return new Subscription(subscriptionId, monthlyPeriod, totalPrice, isStudent, clock);
     }
 
     public SubscriptionId getSubscriptionId() {
         return subscriptionId;
-    }
-
-    public MemberId getSubscriberId() {
-        return memberId;
     }
 
     public SubscriptionDate getSubscriptionDate() {
@@ -81,7 +71,6 @@ public class Subscription {
     public Subscription renew() {
         return new Subscription(this.subscriptionId,
         this.period,
-        this.memberId,
         this.subscriptionDate.renew(),
         this.price);
     }
@@ -94,7 +83,6 @@ public class Subscription {
         final Price newPrice = this.price.applyThreeAnniversaryDiscount();
         return new Subscription(this.subscriptionId,
                 this.period,
-                this.memberId,
                 this.subscriptionDate,
                 newPrice);
     }

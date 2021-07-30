@@ -1,8 +1,5 @@
 package com.gym.subscription.use_case;
 
-import com.gym.membership.domain.Email;
-import com.gym.membership.domain.Member;
-import com.gym.membership.domain.MemberId;
 import com.gym.subscription.domain.Price;
 import com.gym.subscription.domain.Subscription;
 import com.gym.subscription.domain.SubscriptionId;
@@ -37,13 +34,13 @@ class ApplyThirdAnniversaryDiscountUTest {
                                 threeYearSubscriptionId,
                                 Period.Monthly,
                                 new TotalPrice(100d),
-                                Member.createRegular(new MemberId(UUID.randomUUID()), new Email("one@kata.com")),
+                                false,
                                 THREE_YEARS_AGO),
                         Subscription.subscribe(
                                 otherSubscriptionId,
                                 Period.Yearly,
                                 new TotalPrice(80d),
-                                Member.createRegular(new MemberId(UUID.randomUUID()), new Email("one@kata.com")),
+                                false,
                                 LAST_MONTH)
                         )
         );

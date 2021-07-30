@@ -1,5 +1,7 @@
 package com.gym.subscription.use_case;
 
+import com.gym.membership.domain.MemberRepository;
+import com.gym.membership.infrastructure.InMemoryMemberRepository;
 import com.gym.subscription.domain.Subscription;
 import com.gym.subscription.domain.SubscriptionId;
 import com.gym.subscription.domain.SubscriptionRepository;
@@ -22,26 +24,31 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class SubscribeUTest {
 
+    private static final String MEMBER_ID_VALUE = UUID.randomUUID().toString();
     private static final Clock clock = Clock.fixed(Instant.ofEpochSecond(3600), ZoneId.systemDefault());
+    private static final String SUBSCRIPTION_PLAN_ID_VALUE = UUID.randomUUID().toString();
     private final UUID fixedUUID = UUID.randomUUID();
-    private final SubscriptionPlanId subscriptionPlanId = new SubscriptionPlanId(UUID.randomUUID());
+    private final SubscriptionPlanId subscriptionPlanId = new SubscriptionPlanId(SUBSCRIPTION_PLAN_ID_VALUE);
 
     private final SubscriptionPlanRepository subscriptionPlanRepository = new InMemorySubscriptionPlanRepository(fixedUUID);
     private final SubscriptionRepository subscriptionRepository = new InMemorySubscriptionRepository(fixedUUID);
+    private final MemberRepository memberRepository = new InMemoryMemberRepository(fixedUUID);
 
     @BeforeEach
     void setUp() {
         ((InMemorySubscriptionPlanRepository) subscriptionPlanRepository).getAllSubscriptionPlan().add(SubscriptionPlan.createMonthly(subscriptionPlanId, 10d));
+        final MemberId memberId = new MemberId(MEMBER_ID_VALUE);
+        final Member regularMember = Member.createRegular(memberId, new Email("test@email.com"));
+        memberRepository.save(regularMember);
     }
 
     @Nested
     class ExecuteShould {
         @Test
         void save_new_subscription() {
-            final Subscribe subscribe = new Subscribe(subscriptionPlanRepository, subscriptionRepository, clock);
-            final Member member = Member.createRegular(new MemberId(UUID.randomUUID()), new Email("test@email.com"));
+            final Subscribe subscribe = new Subscribe(memberRepository, subscriptionPlanRepository, subscriptionRepository, clock);
 
-            subscribe.execute(member, subscriptionPlanId);
+            subscribe.execute(MEMBER_ID_VALUE, SUBSCRIPTION_PLAN_ID_VALUE);
 
             assertThat(((InMemorySubscriptionRepository) subscriptionRepository).getSubscriptions())
                     .usingFieldByFieldElementComparator()
@@ -49,8 +56,9 @@ public class SubscribeUTest {
                             new SubscriptionId(fixedUUID),
                             Period.Monthly,
                             new TotalPrice(10d),
-                            member,
-                            clock));
+                            false,
+                            clock
+                    ));
         }
     }
 }

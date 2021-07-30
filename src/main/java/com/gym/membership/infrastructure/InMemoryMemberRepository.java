@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class InMemoryMemberRepository implements MemberRepository {
-    private UUID fixedUUID;
+    private final UUID fixedUUID;
     private final HashMap<MemberId, Member> subscribers = new HashMap<>();
 
     public InMemoryMemberRepository(UUID randomUUID) {
@@ -28,5 +28,10 @@ public class InMemoryMemberRepository implements MemberRepository {
     @Override
     public void save(Member member) {
         subscribers.put(member.getId(), member);
+    }
+
+    @Override
+    public Member findById(MemberId memberId) {
+        return subscribers.get(memberId);
     }
 }
