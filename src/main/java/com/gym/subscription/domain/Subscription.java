@@ -32,7 +32,12 @@ public class Subscription {
         this.price = initializePriceWithDiscount(totalPrice, member);
     }
 
-    private Subscription(SubscriptionId subscriptionId, SubscriptionPlanId subscriptionPlanId, Period period, MemberId memberId, SubscriptionDate subscriptionDate, Price price) {
+    private Subscription(SubscriptionId subscriptionId,
+                         SubscriptionPlanId subscriptionPlanId,
+                         Period period,
+                         MemberId memberId,
+                         SubscriptionDate subscriptionDate,
+                         Price price) {
         this.subscriptionId = subscriptionId;
         this.subscriptionPlanId = subscriptionPlanId;
         this.period = period;
@@ -84,11 +89,25 @@ public class Subscription {
     }
 
     public Subscription renew() {
-        return  new Subscription(this.subscriptionId,
+        return new Subscription(this.subscriptionId,
         this.subscriptionPlanId,
         this.period,
         this.memberId,
         this.subscriptionDate.renew(),
         this.price);
+    }
+
+    public boolean hasItThirdAnniversary(LocalDate today) {
+        return subscriptionDate.hasItThirdAnniversary(today);
+    }
+
+    public Subscription applyThirdAnniversaryDiscount() {
+        final Price newPrice = this.price.applyThreeAnniversaryDiscount();
+        return new Subscription(this.subscriptionId,
+                this.subscriptionPlanId,
+                this.period,
+                this.memberId,
+                this.subscriptionDate,
+                newPrice);
     }
 }

@@ -10,4 +10,8 @@ public record SubscriptionDate(LocalDate startDate, LocalDate endDate) {
     public SubscriptionDate renew() {
         return new SubscriptionDate(startDate, endDate.plusMonths(1));
     }
+
+    public boolean hasItThirdAnniversary(LocalDate today) {
+        return startDate.plusYears(3).isEqual(today);
+    }
 }

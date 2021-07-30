@@ -8,4 +8,8 @@ public record Price(Double value) {
             return this;
         }
     }
+
+    public Price applyThreeAnniversaryDiscount() {
+        return new Price(this.value * (1 - 5d / 100));
+    }
 }
