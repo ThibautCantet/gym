@@ -7,6 +7,7 @@ import com.gym.membership.domain.Member;
 public class DoubleMailer implements Mailer {
     private Boolean hasSentWelcomeEmail = false;
     private Boolean hasSentSummaryEmail = false;
+    private Boolean hasSentThirdAnniversaryDiscountEmail = false;
 
     public Boolean hasSentWelcomeEmail() {
         return hasSentWelcomeEmail;
@@ -14,6 +15,10 @@ public class DoubleMailer implements Mailer {
 
     public boolean hasSentSummaryEmail() {
         return hasSentSummaryEmail;
+    }
+
+    public boolean hasSentThirdAnniversaryDiscountEmail() {
+        return hasSentThirdAnniversaryDiscountEmail;
     }
 
     @Override
@@ -24,5 +29,10 @@ public class DoubleMailer implements Mailer {
     @Override
     public void sendSummaryEmail(Email email) {
         hasSentSummaryEmail = true;
+    }
+
+    @Override
+    public void sendThirdAnniversaryDiscountEmail(Email email) {
+        hasSentThirdAnniversaryDiscountEmail = true;
     }
 }

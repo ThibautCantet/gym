@@ -4,4 +4,6 @@ public interface Mailer {
     void sentWelcomeEmail(Member member);
 
     void sendSummaryEmail(Email email);
+
+    void sendThirdAnniversaryDiscountEmail(Email email);
 }
