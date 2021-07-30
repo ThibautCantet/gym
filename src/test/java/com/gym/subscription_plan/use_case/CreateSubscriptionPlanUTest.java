@@ -1,6 +1,5 @@
 package com.gym.subscription_plan.use_case;
 
-import com.gym.subscription_plan.domain.BasePrice;
 import com.gym.subscription_plan.domain.Period;
 import com.gym.subscription_plan.domain.SubscriptionPlan;
 import com.gym.subscription_plan.domain.SubscriptionPlanId;
@@ -20,8 +19,7 @@ public class CreateSubscriptionPlanUTest {
     public void execute_should_save_new_monthly_subscription_plan() {
         final InMemorySubscriptionPlanRepository subscriptionPlanRepository = new InMemorySubscriptionPlanRepository(fixedUUID);
         final CreateSubscriptionPlan createSubscriptionPlan = new CreateSubscriptionPlan(subscriptionPlanRepository);
-        final double basePriceValue = 10d;
-        final BasePrice basePrice = new BasePrice(basePriceValue);
+        final double basePrice = 10d;
         final Period period = Period.Monthly;
 
         createSubscriptionPlan.execute(basePrice, period);
@@ -35,7 +33,7 @@ public class CreateSubscriptionPlanUTest {
     public void execute_should_apply_10_percent_discount_and_save_new_yearly_subscription_plan() {
         final InMemorySubscriptionPlanRepository subscriptionPlanRepository = new InMemorySubscriptionPlanRepository(fixedUUID);
         final CreateSubscriptionPlan createSubscriptionPlan = new CreateSubscriptionPlan(subscriptionPlanRepository);
-        final BasePrice basePrice = new BasePrice(10d);
+        final double basePrice = 10d;
         final Period period = Period.Yearly;
 
         createSubscriptionPlan.execute(basePrice, period);

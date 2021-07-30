@@ -14,10 +14,10 @@ class ChangeSubscriptionPlanPriceUTest {
     void execute_should_change_subscriptionPlan_price_when_monthly_plan() {
         final SubscriptionPlanRepository subscriptionPlanRepository = new InMemorySubscriptionPlanRepository(UUID.randomUUID());
         final SubscriptionPlanId subscriptionPlanId = new SubscriptionPlanId(UUID.randomUUID());
-        ((InMemorySubscriptionPlanRepository) subscriptionPlanRepository).add(SubscriptionPlan.createMonthly(subscriptionPlanId, new BasePrice(90d)));
+        ((InMemorySubscriptionPlanRepository) subscriptionPlanRepository).add(SubscriptionPlan.createMonthly(subscriptionPlanId, 90d));
         final ChangeSubscriptionPlanPrice changeSubscriptionPlanPrice = new ChangeSubscriptionPlanPrice(subscriptionPlanRepository);
 
-        changeSubscriptionPlanPrice.execute(subscriptionPlanId, new BasePrice(100d));
+        changeSubscriptionPlanPrice.execute(subscriptionPlanId, 100d);
 
         final SubscriptionPlan subscriptionPlan = ((InMemorySubscriptionPlanRepository) subscriptionPlanRepository).getAllSubscriptionPlan().get(0);
         assertThat(subscriptionPlan.getBasePrice()).isEqualTo(new BasePrice(100d));
@@ -28,10 +28,10 @@ class ChangeSubscriptionPlanPriceUTest {
     void execute_should_change_subscriptionPlan_price_when_yearly_plan() {
         final SubscriptionPlanRepository subscriptionPlanRepository = new InMemorySubscriptionPlanRepository(UUID.randomUUID());
         final SubscriptionPlanId subscriptionPlanId = new SubscriptionPlanId(UUID.randomUUID());
-        ((InMemorySubscriptionPlanRepository) subscriptionPlanRepository).add(SubscriptionPlan.createYearly(subscriptionPlanId, new BasePrice(20d)));
+        ((InMemorySubscriptionPlanRepository) subscriptionPlanRepository).add(SubscriptionPlan.createYearly(subscriptionPlanId, 20d));
         final ChangeSubscriptionPlanPrice changeSubscriptionPlanPrice = new ChangeSubscriptionPlanPrice(subscriptionPlanRepository);
 
-        changeSubscriptionPlanPrice.execute(subscriptionPlanId, new BasePrice(100d));
+        changeSubscriptionPlanPrice.execute(subscriptionPlanId,100d);
 
         final SubscriptionPlan subscriptionPlan = ((InMemorySubscriptionPlanRepository) subscriptionPlanRepository).getAllSubscriptionPlan().get(0);
         assertThat(subscriptionPlan.getBasePrice()).isEqualTo(new BasePrice(100d));

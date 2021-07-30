@@ -30,7 +30,7 @@ class RenewMonthlySubscriptionUTest {
     @Test
     void execute_should_automatically_renew_monthly_subscription() {
         final SubscriptionPlanId monthlySubscriptionPlanId = new SubscriptionPlanId(UUID.randomUUID());
-        final SubscriptionPlan monthlySubscriptionPlan = SubscriptionPlan.createMonthly(monthlySubscriptionPlanId, new BasePrice(10d));
+        final SubscriptionPlan monthlySubscriptionPlan = SubscriptionPlan.createMonthly(monthlySubscriptionPlanId, 10d);
         final SubscriptionPlanRepository subscriptionPlanRepository = new InMemorySubscriptionPlanRepository(UUID.randomUUID());
         ((InMemorySubscriptionPlanRepository) subscriptionPlanRepository).add(monthlySubscriptionPlan);
 
@@ -59,7 +59,7 @@ class RenewMonthlySubscriptionUTest {
     @Test
     void execute_should_not_automatically_renew_yearly_subscription() {
         final SubscriptionPlanId yearlySubscriptionPlanId = new SubscriptionPlanId(UUID.randomUUID());
-        final SubscriptionPlan yearlySubscriptionPlan = SubscriptionPlan.createYearly(yearlySubscriptionPlanId, new BasePrice(100d));
+        final SubscriptionPlan yearlySubscriptionPlan = SubscriptionPlan.createYearly(yearlySubscriptionPlanId, 100d);
         final SubscriptionPlanRepository subscriptionPlanRepository = new InMemorySubscriptionPlanRepository(UUID.randomUUID());
         ((InMemorySubscriptionPlanRepository) subscriptionPlanRepository).add(yearlySubscriptionPlan);
 

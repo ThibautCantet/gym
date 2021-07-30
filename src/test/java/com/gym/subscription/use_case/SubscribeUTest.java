@@ -31,7 +31,7 @@ public class SubscribeUTest {
 
     @BeforeEach
     void setUp() {
-        ((InMemorySubscriptionPlanRepository) subscriptionPlanRepository).getAllSubscriptionPlan().add(SubscriptionPlan.createMonthly(subscriptionPlanId, new BasePrice(10d)));
+        ((InMemorySubscriptionPlanRepository) subscriptionPlanRepository).getAllSubscriptionPlan().add(SubscriptionPlan.createMonthly(subscriptionPlanId, 10d));
     }
 
     @Nested

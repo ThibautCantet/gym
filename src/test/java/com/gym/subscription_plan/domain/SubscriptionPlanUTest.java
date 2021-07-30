@@ -18,7 +18,7 @@ public class SubscriptionPlanUTest {
             final double basePriceValue = 10d;
             final BasePrice basePrice = new BasePrice(basePriceValue);
 
-            final SubscriptionPlan subscriptionPlan = SubscriptionPlan.createMonthly(subscriptionPlanId, basePrice);
+            final SubscriptionPlan subscriptionPlan = SubscriptionPlan.createMonthly(subscriptionPlanId, basePriceValue);
 
             assertThat(subscriptionPlan.getId()).isEqualTo(subscriptionPlanId);
             assertThat(subscriptionPlan.getBasePrice()).isEqualTo(basePrice);
@@ -32,7 +32,7 @@ public class SubscriptionPlanUTest {
             final double basePriceValue = 10d;
             final BasePrice basePrice = new BasePrice(basePriceValue);
 
-            final SubscriptionPlan subscriptionPlan = SubscriptionPlan.createYearly(subscriptionPlanId, basePrice);
+            final SubscriptionPlan subscriptionPlan = SubscriptionPlan.createYearly(subscriptionPlanId, basePriceValue);
 
             assertThat(subscriptionPlan.getId()).isEqualTo(subscriptionPlanId);
             assertThat(subscriptionPlan.getBasePrice()).isEqualTo(basePrice);

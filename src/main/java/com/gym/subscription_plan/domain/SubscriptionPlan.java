@@ -7,19 +7,19 @@ public class SubscriptionPlan {
     private final DiscountRate discountRate;
     private final TotalPrice totalPrice;
 
-    private SubscriptionPlan(SubscriptionPlanId subscriptionPlanId, BasePrice basePrice, Period period) {
+    private SubscriptionPlan(SubscriptionPlanId subscriptionPlanId, double basePrice, Period period) {
         this.id = subscriptionPlanId;
-        this.basePrice = basePrice;
+        this.basePrice = new BasePrice(basePrice);
         this.period = period;
         this.discountRate = new DiscountRate(period);
-        this.totalPrice = initializeTotalPrice(basePrice);
+        this.totalPrice = initializeTotalPrice(this.basePrice);
     }
 
-    public static SubscriptionPlan createMonthly(SubscriptionPlanId subscriptionPlanId, BasePrice basePrice) {
+    public static SubscriptionPlan createMonthly(SubscriptionPlanId subscriptionPlanId, double basePrice) {
         return new SubscriptionPlan(subscriptionPlanId, basePrice, Period.Monthly);
     }
 
-    public static SubscriptionPlan createYearly(SubscriptionPlanId subscriptionPlanId, BasePrice basePrice) {
+    public static SubscriptionPlan createYearly(SubscriptionPlanId subscriptionPlanId, double basePrice) {
         return new SubscriptionPlan(subscriptionPlanId, basePrice, Period.Yearly);
     }
 
@@ -48,7 +48,7 @@ public class SubscriptionPlan {
         return totalPrice;
     }
 
-    public SubscriptionPlan changePrice(BasePrice basePrice) {
+    public SubscriptionPlan changePrice(double basePrice) {
         return new SubscriptionPlan(this.id, basePrice, this.period);
     }
 }

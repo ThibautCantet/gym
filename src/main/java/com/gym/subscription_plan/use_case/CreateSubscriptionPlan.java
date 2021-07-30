@@ -9,7 +9,7 @@ public class CreateSubscriptionPlan {
         this.subscriptionPlanRepository = subscriptionPlanRepository;
     }
 
-    public void execute(BasePrice basePrice, Period period) {
+    public void execute(double basePrice, Period period) {
         final SubscriptionPlanId subscriptionPlanId = subscriptionPlanRepository.next();
 
         SubscriptionPlan subscriptionPlan;
