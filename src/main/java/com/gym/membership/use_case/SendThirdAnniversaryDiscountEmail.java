@@ -10,7 +10,7 @@ public class SendThirdAnniversaryDiscountEmail {
         this.mailer = mailer;
     }
 
-    public void execute(Email email) {
-        mailer.sendThirdAnniversaryDiscountEmail(email);
+    public void handle(SendThirdAnniversaryDiscountEmailCommand sendThirdAnniversaryDiscountEmailCommand) {
+        mailer.sendThirdAnniversaryDiscountEmail(new Email(sendThirdAnniversaryDiscountEmailCommand.email()));
     }
 }

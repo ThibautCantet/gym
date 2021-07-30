@@ -10,7 +10,7 @@ public class SendSummaryEmailForNewSubscription {
         this.mailer = mailer;
     }
 
-    public void execute(Email email) {
-        mailer.sendSummaryEmail(email);
+    public void handle(SendSummaryEmailForNewSubscriptionCommand sendSummaryEmailForNewSubscriptionCommand) {
+        mailer.sendSummaryEmail(new Email(sendSummaryEmailForNewSubscriptionCommand.email()));
     }
 }

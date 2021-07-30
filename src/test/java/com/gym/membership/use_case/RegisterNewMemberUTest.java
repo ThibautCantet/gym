@@ -1,6 +1,5 @@
 package com.gym.membership.use_case;
 
-import com.gym.membership.domain.Email;
 import com.gym.membership.domain.Mailer;
 import com.gym.membership.domain.MemberRepository;
 import com.gym.membership.domain.Member;
@@ -15,21 +14,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 class RegisterNewMemberUTest {
 
     @Test
-    void execute_should_send_email_to_new_member() {
+    void handle_should_send_email_to_new_member() {
         final Mailer mailer = new DoubleMailer();
 
         final MemberRepository memberRepository = new InMemoryMemberRepository(UUID.randomUUID());
         final RegisterNewMember registerNewMember = new RegisterNewMember(memberRepository, mailer);
-        final Email email = new Email("thibaut.cantet@kata.fr");
-        final boolean isStudent = false;
+        final String email = "thibaut.cantet@kata.fr";
+        final RegisterNewMemberCommand registerNewMemberCommand = new RegisterNewMemberCommand(email, false);
 
-        registerNewMember.execute(email, isStudent);
+        registerNewMember.handle(registerNewMemberCommand);
 
         assertThat(((DoubleMailer) mailer).hasSentWelcomeEmail()).isTrue();
     }
 
     @Test
-    void execute_should_save_new_regular_member() {
+    void handle_should_save_new_regular_member() {
         final Mailer mailer = new DoubleMailer();
 
         final UUID randomUUID = UUID.randomUUID();
@@ -37,10 +36,10 @@ class RegisterNewMemberUTest {
 
         final MemberRepository memberRepository = new InMemoryMemberRepository(randomUUID);
         final RegisterNewMember registerNewMember = new RegisterNewMember(memberRepository, mailer);
-        final Email email = new Email("thibaut.cantet@kata.fr");
-        final boolean isStudent = false;
+        final String email = "thibaut.cantet@kata.fr";
+        final RegisterNewMemberCommand registerNewMemberCommand = new RegisterNewMemberCommand(email, false);
 
-        registerNewMember.execute(email, isStudent);
+        registerNewMember.handle(registerNewMemberCommand);
 
         assertThat((((InMemoryMemberRepository) memberRepository).getSubscribers()))
                 .usingElementComparatorIgnoringFields()
@@ -48,7 +47,7 @@ class RegisterNewMemberUTest {
     }
 
     @Test
-    void execute_should_save_new_student_member() {
+    void handle_should_save_new_student_member() {
         final Mailer mailer = new DoubleMailer();
 
         final UUID randomUUID = UUID.randomUUID();
@@ -56,10 +55,10 @@ class RegisterNewMemberUTest {
 
         final MemberRepository memberRepository = new InMemoryMemberRepository(randomUUID);
         final RegisterNewMember registerNewMember = new RegisterNewMember(memberRepository, mailer);
-        final Email email = new Email("thibaut.cantet@kata.fr");
-        final boolean isStudent = true;
+        final String email = "thibaut.cantet@kata.fr";
+        final RegisterNewMemberCommand registerNewMemberCommand = new RegisterNewMemberCommand(email, true);
 
-        registerNewMember.execute(email, isStudent);
+        registerNewMember.handle(registerNewMemberCommand);
 
         assertThat((((InMemoryMemberRepository) memberRepository).getSubscribers()))
                 .usingElementComparatorIgnoringFields()

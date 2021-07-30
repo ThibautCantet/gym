@@ -15,14 +15,14 @@ public class RegisterNewMember {
         this.mailer = mailer;
     }
 
-    public void execute(Email email, boolean isStudent) {
+    public void handle(RegisterNewMemberCommand registerNewMemberCommand) {
         MemberId memberId = memberRepository.next();
 
         final Member member;
-        if (isStudent) {
-            member = Member.createStudent(memberId, email);
+        if (registerNewMemberCommand.isStudent()) {
+            member = Member.createStudent(memberId, registerNewMemberCommand.email());
         } else {
-            member = Member.createRegular(memberId, email);
+            member = Member.createRegular(memberId, registerNewMemberCommand.email());
         }
         memberRepository.save(member);
 

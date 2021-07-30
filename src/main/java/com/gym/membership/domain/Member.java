@@ -5,9 +5,9 @@ public class Member {
     private final Email email;
     private final boolean isStudent;
 
-    private Member(MemberId memberId, Email email, boolean isStudent) {
+    private Member(MemberId memberId, String email, boolean isStudent) {
         this.memberId = memberId;
-        this.email = email;
+        this.email = new Email(email);
         this.isStudent = isStudent;
     }
 
@@ -23,11 +23,11 @@ public class Member {
         return isStudent;
     }
 
-    public static Member createRegular(MemberId memberId, Email email) {
+    public static Member createRegular(MemberId memberId, String email) {
         return new Member(memberId, email, false);
     }
 
-    public static Member createStudent(MemberId memberId, Email email) {
+    public static Member createStudent(MemberId memberId, String email) {
         return new Member(memberId, email, true);
     }
 }

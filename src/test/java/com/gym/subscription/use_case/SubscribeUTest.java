@@ -5,7 +5,6 @@ import com.gym.membership.infrastructure.InMemoryMemberRepository;
 import com.gym.subscription.domain.Subscription;
 import com.gym.subscription.domain.SubscriptionId;
 import com.gym.subscription.domain.SubscriptionRepository;
-import com.gym.membership.domain.Email;
 import com.gym.membership.domain.Member;
 import com.gym.membership.domain.MemberId;
 import com.gym.subscription_plan.domain.*;
@@ -38,7 +37,7 @@ public class SubscribeUTest {
     void setUp() {
         ((InMemorySubscriptionPlanRepository) subscriptionPlanRepository).getAllSubscriptionPlan().add(SubscriptionPlan.createMonthly(subscriptionPlanId, 10d));
         final MemberId memberId = new MemberId(MEMBER_ID_VALUE);
-        final Member regularMember = Member.createRegular(memberId, new Email("test@email.com"));
+        final Member regularMember = Member.createRegular(memberId, "test@email.com");
         memberRepository.save(regularMember);
     }
 
