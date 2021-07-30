@@ -24,12 +24,12 @@ public class Subscribe {
         this.clock = clock;
     }
 
-    public void execute(String memberId, String subscriptionPlanId) {
+    public void handle(SubscribeCommand subscribeCommand) {
         final SubscriptionId subscriptionId = subscriptionRepository.next();
-        final SubscriptionPlan subscriptionPlan = subscriptionPlanRepository.findById(new SubscriptionPlanId(subscriptionPlanId));
+        final SubscriptionPlan subscriptionPlan = subscriptionPlanRepository.findById(new SubscriptionPlanId(subscribeCommand.subscriptionPlanId()));
         final TotalPrice basePrice = subscriptionPlan.getTotalPrice();
         final Period period = subscriptionPlan.getPeriod();
-        final Member member = memberRepository.findById(new MemberId(memberId));
+        final Member member = memberRepository.findById(new MemberId(subscribeCommand.memberId()));
 
         final Subscription subscription = Subscription.subscribe(subscriptionId, period, basePrice, member.isStudent(), clock);
 

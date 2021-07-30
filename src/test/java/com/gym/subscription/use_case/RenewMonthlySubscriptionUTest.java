@@ -24,7 +24,7 @@ class RenewMonthlySubscriptionUTest {
     private static final Clock NOW = Clock.fixed(Instant.parse("2021-07-21T12:00:00.00Z"), ZoneId.systemDefault());
 
     @Test
-    void execute_should_automatically_renew_monthly_subscription() {
+    void handle_should_automatically_renew_monthly_subscription() {
         final SubscriptionPlanId monthlySubscriptionPlanId = new SubscriptionPlanId(UUID.randomUUID());
         final SubscriptionPlan monthlySubscriptionPlan = SubscriptionPlan.createMonthly(monthlySubscriptionPlanId, 10d);
         final SubscriptionPlanRepository subscriptionPlanRepository = new InMemorySubscriptionPlanRepository(UUID.randomUUID());
@@ -42,7 +42,7 @@ class RenewMonthlySubscriptionUTest {
 
         final RenewMonthlySubscription renewMonthlySubscription = new RenewMonthlySubscription(subscriptionRepository, NOW);
 
-        renewMonthlySubscription.execute();
+        renewMonthlySubscription.handle();
 
         final LocalDate today = LocalDate.now(NOW);
         final LocalDate lastMonth = LocalDate.now(LAST_MONTH);
@@ -52,7 +52,7 @@ class RenewMonthlySubscriptionUTest {
     }
 
     @Test
-    void execute_should_not_automatically_renew_yearly_subscription() {
+    void handle_should_not_automatically_renew_yearly_subscription() {
         final SubscriptionPlanId yearlySubscriptionPlanId = new SubscriptionPlanId(UUID.randomUUID());
         final SubscriptionPlan yearlySubscriptionPlan = SubscriptionPlan.createYearly(yearlySubscriptionPlanId, 100d);
         final SubscriptionPlanRepository subscriptionPlanRepository = new InMemorySubscriptionPlanRepository(UUID.randomUUID());
@@ -70,7 +70,7 @@ class RenewMonthlySubscriptionUTest {
 
         final RenewMonthlySubscription renewMonthlySubscription = new RenewMonthlySubscription(subscriptionRepository, NOW);
 
-        renewMonthlySubscription.execute();
+        renewMonthlySubscription.handle();
 
         final LocalDate lastMonth = LocalDate.now(LAST_MONTH);
         final LocalDate inOneYear = lastMonth.plusYears(1);

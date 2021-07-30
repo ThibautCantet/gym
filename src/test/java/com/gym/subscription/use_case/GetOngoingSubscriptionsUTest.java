@@ -25,7 +25,7 @@ class GetOngoingSubscriptionsUTest {
     private static final Period MONTHLY_PERIOD = Period.Monthly;
 
     @Test
-    void execute_should_return_all_ongoing_subscriptions() {
+    void handle_should_return_all_ongoing_subscriptions() {
         final SubscriptionRepository subscriptionRepository = new InMemorySubscriptionRepository(UUID.randomUUID());
         ((InMemorySubscriptionRepository) subscriptionRepository).addSubscriptions(
                 asList(
@@ -56,8 +56,9 @@ class GetOngoingSubscriptionsUTest {
         );
 
         final GetOngoingSubscriptions getOngoingSubscriptions = new GetOngoingSubscriptions(subscriptionRepository);
+        final GetOngoingSubscriptionsCommand getOngoingSubscriptionsCommand = new GetOngoingSubscriptionsCommand(LocalDate.now(LAST_MONTH));
 
-        Double result = getOngoingSubscriptions.execute(LocalDate.now(LAST_MONTH));
+        Double result = getOngoingSubscriptions.handle(getOngoingSubscriptionsCommand);
 
         assertThat(result).isEqualTo(280d);
     }

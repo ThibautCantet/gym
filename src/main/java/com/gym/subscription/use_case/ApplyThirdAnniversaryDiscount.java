@@ -17,7 +17,7 @@ public class ApplyThirdAnniversaryDiscount {
         this.clock = clock;
     }
 
-    public void execute() {
+    public void handle() {
         final List<Subscription> subscriptionsToUpdate = subscriptionRepository.findAll()
                 .stream()
                 .filter(subscription -> subscription.hasItThirdAnniversary(LocalDate.now(clock)))

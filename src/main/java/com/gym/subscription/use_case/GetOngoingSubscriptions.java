@@ -13,10 +13,10 @@ public class GetOngoingSubscriptions {
         this.subscriptionRepository = subscriptionRepository;
     }
 
-    public Double execute(LocalDate localDate) {
+    public Double handle(GetOngoingSubscriptionsCommand getOngoingSubscriptionsCommand) {
         return subscriptionRepository.findAll()
                 .stream()
-                .filter(subscription -> subscription.isOnGoing(localDate))
+                .filter(subscription -> subscription.isOnGoing(getOngoingSubscriptionsCommand.localDate()))
                 .map(Subscription::getPrice)
                 .map(Price::value)
                 .reduce(Double::sum)

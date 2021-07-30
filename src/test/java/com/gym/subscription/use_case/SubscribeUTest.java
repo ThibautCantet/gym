@@ -43,12 +43,13 @@ public class SubscribeUTest {
     }
 
     @Nested
-    class ExecuteShould {
+    class HandleShould {
         @Test
         void save_new_subscription() {
             final Subscribe subscribe = new Subscribe(memberRepository, subscriptionPlanRepository, subscriptionRepository, clock);
+            final SubscribeCommand subscribeCommand = new SubscribeCommand(MEMBER_ID_VALUE, SUBSCRIPTION_PLAN_ID_VALUE);
 
-            subscribe.execute(MEMBER_ID_VALUE, SUBSCRIPTION_PLAN_ID_VALUE);
+            subscribe.handle(subscribeCommand);
 
             assertThat(((InMemorySubscriptionRepository) subscriptionRepository).getSubscriptions())
                     .usingFieldByFieldElementComparator()

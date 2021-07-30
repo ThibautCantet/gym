@@ -17,7 +17,7 @@ public class RenewMonthlySubscription {
         this.clock = clock;
     }
 
-    public void execute() {
+    public void handle() {
         final List<Subscription> subscriptionsToRenew = subscriptionRepository.findAll().stream()
                 .filter(subscription -> subscription.isToRenew(LocalDate.now(clock)))
                 .map(Subscription::renew)

@@ -24,7 +24,7 @@ class ApplyThirdAnniversaryDiscountUTest {
     private static final Clock NOW = Clock.fixed(Instant.parse("2021-07-30T16:00:00.00Z"), ZoneId.systemDefault());
 
     @Test
-    void execute_should_apply_discount_for_all_subscription_at_their_third_anniversary() {
+    void handle_should_apply_discount_for_all_subscription_at_their_third_anniversary() {
         final SubscriptionRepository subscriptionRepository = new InMemorySubscriptionRepository(UUID.randomUUID());
         final SubscriptionId threeYearSubscriptionId = new SubscriptionId(UUID.randomUUID());
         final SubscriptionId otherSubscriptionId = new SubscriptionId(UUID.randomUUID());
@@ -46,7 +46,7 @@ class ApplyThirdAnniversaryDiscountUTest {
         );
         final ApplyThirdAnniversaryDiscount applyThirdAnniversaryDiscount = new ApplyThirdAnniversaryDiscount(subscriptionRepository, NOW);
 
-        applyThirdAnniversaryDiscount.execute();
+        applyThirdAnniversaryDiscount.handle();
 
         final Subscription updatedSubscriptionWithDiscount = ((InMemorySubscriptionRepository) subscriptionRepository).findById(threeYearSubscriptionId);
         assertThat(updatedSubscriptionWithDiscount.getPrice()).isEqualTo(new Price(95d));
