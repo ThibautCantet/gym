@@ -7,7 +7,6 @@ import com.gym.membership.domain.Email;
 import com.gym.membership.domain.Member;
 import com.gym.membership.domain.MemberId;
 import com.gym.subscription_plan.domain.Period;
-import com.gym.subscription_plan.domain.SubscriptionPlanId;
 import com.gym.subscription_plan.domain.TotalPrice;
 import com.gym.subscription.infrastructure.InMemorySubscriptionRepository;
 import org.junit.jupiter.api.Test;
@@ -31,35 +30,29 @@ class GetOngoingSubscriptionsUTest {
 
     @Test
     void execute_should_return_all_ongoing_subscriptions() {
-        final SubscriptionPlanId subscriptionPlanId = new SubscriptionPlanId(UUID.randomUUID());
-
         final SubscriptionRepository subscriptionRepository = new InMemorySubscriptionRepository(UUID.randomUUID());
         ((InMemorySubscriptionRepository) subscriptionRepository).addSubscriptions(
                 asList(
                         Subscription.subscribe(
                                 new SubscriptionId(UUID.randomUUID()),
-                                subscriptionPlanId,
                                 MONTHLY_PERIOD,
                                 new TotalPrice(80d),
                                 Member.createRegular(new MemberId(UUID.randomUUID()), email),
                                 TWO_MONTH_AGO),
                         Subscription.subscribe(
                                 new SubscriptionId(UUID.randomUUID()),
-                                subscriptionPlanId,
                                 MONTHLY_PERIOD,
                                 new TotalPrice(100d),
                                 Member.createRegular(new MemberId(UUID.randomUUID()), email),
                                 LAST_MONTH),
                         Subscription.subscribe(
                                 new SubscriptionId(UUID.randomUUID()),
-                                subscriptionPlanId,
                                 MONTHLY_PERIOD,
                                 new TotalPrice(100d),
                                 Member.createRegular(new MemberId(UUID.randomUUID()), email),
                                 LAST_MONTH),
                         Subscription.subscribe(
                                 new SubscriptionId(UUID.randomUUID()),
-                                subscriptionPlanId,
                                 MONTHLY_PERIOD,
                                 new TotalPrice(110d),
                                 Member.createRegular(new MemberId(UUID.randomUUID()), email),

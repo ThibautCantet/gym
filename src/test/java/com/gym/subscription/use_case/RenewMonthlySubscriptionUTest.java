@@ -38,7 +38,6 @@ class RenewMonthlySubscriptionUTest {
         final SubscriptionRepository subscriptionRepository = new InMemorySubscriptionRepository(UUID.randomUUID());
         final Subscription monthlySubscriptionToRenew = Subscription.subscribe(
                 monthlySubscriptionId,
-                monthlySubscriptionPlanId,
                 Period.Monthly,
                 new TotalPrice(80d),
                 Member.createRegular(new MemberId(UUID.randomUUID()), email),
@@ -66,7 +65,6 @@ class RenewMonthlySubscriptionUTest {
         final SubscriptionId yearlySubscriptionId = new SubscriptionId(UUID.randomUUID());
         final Subscription yearlySubscription = Subscription.subscribe(
                 yearlySubscriptionId,
-                yearlySubscriptionPlanId,
                 Period.Yearly,
                 new TotalPrice(100d),
                 Member.createRegular(new MemberId(UUID.randomUUID()), email),

@@ -3,7 +3,6 @@ package com.gym.subscription.domain;
 import com.gym.membership.domain.Member;
 import com.gym.membership.domain.MemberId;
 import com.gym.subscription_plan.domain.Period;
-import com.gym.subscription_plan.domain.SubscriptionPlanId;
 import com.gym.subscription_plan.domain.TotalPrice;
 
 import java.time.Clock;
@@ -11,20 +10,17 @@ import java.time.LocalDate;
 
 public class Subscription {
     private final SubscriptionId subscriptionId;
-    private final SubscriptionPlanId subscriptionPlanId;
     private final Period period;
     private final MemberId memberId;
     private final SubscriptionDate subscriptionDate;
     private final Price price;
 
     private Subscription(SubscriptionId subscriptionId,
-                         SubscriptionPlanId subscriptionPlanId,
                          Period period,
                          TotalPrice totalPrice,
                          Member member,
                          Clock clock) {
         this.subscriptionId = subscriptionId;
-        this.subscriptionPlanId = subscriptionPlanId;
         this.period = period;
         this.memberId = member.getId();
         final LocalDate today = LocalDate.now(clock);
@@ -33,13 +29,11 @@ public class Subscription {
     }
 
     private Subscription(SubscriptionId subscriptionId,
-                         SubscriptionPlanId subscriptionPlanId,
                          Period period,
                          MemberId memberId,
                          SubscriptionDate subscriptionDate,
                          Price price) {
         this.subscriptionId = subscriptionId;
-        this.subscriptionPlanId = subscriptionPlanId;
         this.period = period;
         this.memberId = memberId;
         this.subscriptionDate = subscriptionDate;
@@ -56,16 +50,12 @@ public class Subscription {
         return price.applyDiscount(member.isStudent());
     }
 
-    public static Subscription subscribe(SubscriptionId subscriptionId, SubscriptionPlanId subscriptionPlanId, Period monthlyPeriod, TotalPrice totalPrice, Member member, Clock clock) {
-        return new Subscription(subscriptionId, subscriptionPlanId, monthlyPeriod, totalPrice, member, clock);
+    public static Subscription subscribe(SubscriptionId subscriptionId, Period monthlyPeriod, TotalPrice totalPrice, Member member, Clock clock) {
+        return new Subscription(subscriptionId, monthlyPeriod, totalPrice, member, clock);
     }
 
     public SubscriptionId getSubscriptionId() {
         return subscriptionId;
-    }
-
-    public SubscriptionPlanId getSubscriptionPlanId() {
-        return subscriptionPlanId;
     }
 
     public MemberId getSubscriberId() {
@@ -90,7 +80,6 @@ public class Subscription {
 
     public Subscription renew() {
         return new Subscription(this.subscriptionId,
-        this.subscriptionPlanId,
         this.period,
         this.memberId,
         this.subscriptionDate.renew(),
@@ -104,7 +93,6 @@ public class Subscription {
     public Subscription applyThirdAnniversaryDiscount() {
         final Price newPrice = this.price.applyThreeAnniversaryDiscount();
         return new Subscription(this.subscriptionId,
-                this.subscriptionPlanId,
                 this.period,
                 this.memberId,
                 this.subscriptionDate,

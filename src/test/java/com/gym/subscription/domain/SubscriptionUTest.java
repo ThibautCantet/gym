@@ -36,7 +36,7 @@ public class SubscriptionUTest {
             final MemberId memberId = new MemberId(UUID.randomUUID());
             final Member member = Member.createRegular(memberId, email);
 
-            final Subscription subscription = Subscription.subscribe(subscriptionId, subscriptionPlanId, MONTHLY_PERIOD, totalPrice, member, clock);
+            final Subscription subscription = Subscription.subscribe(subscriptionId, MONTHLY_PERIOD, totalPrice, member, clock);
 
             assertThat(subscription.getSubscriptionId()).isEqualTo(subscriptionId);
             assertThat(subscription.getSubscriberId()).isEqualTo(memberId);
@@ -51,7 +51,7 @@ public class SubscriptionUTest {
             final MemberId memberId = new MemberId(UUID.randomUUID());
             final Member member = Member.createStudent(memberId, email);
 
-            final Subscription subscription = Subscription.subscribe(subscriptionId, subscriptionPlanId, MONTHLY_PERIOD, totalPrice, member, clock);
+            final Subscription subscription = Subscription.subscribe(subscriptionId, MONTHLY_PERIOD, totalPrice, member, clock);
 
             assertThat(subscription.getSubscriptionId()).isEqualTo(subscriptionId);
             assertThat(subscription.getSubscriberId()).isEqualTo(memberId);
@@ -66,7 +66,7 @@ public class SubscriptionUTest {
             final MemberId memberId = new MemberId(UUID.randomUUID());
             final Member member = Member.createRegular(memberId, email);
 
-            final Subscription subscription = Subscription.subscribe(subscriptionId, subscriptionPlanId, MONTHLY_PERIOD, totalPrice, member, clock);
+            final Subscription subscription = Subscription.subscribe(subscriptionId, MONTHLY_PERIOD, totalPrice, member, clock);
 
             assertThat(subscription.getSubscriptionDate()).isEqualTo(new SubscriptionDate(TODAY, IN_ONE_MONTH));
         }
@@ -77,7 +77,7 @@ public class SubscriptionUTest {
             final MemberId memberId = new MemberId(UUID.randomUUID());
             final Member member = Member.createRegular(memberId, email);
 
-            final Subscription subscription = Subscription.subscribe(subscriptionId, subscriptionPlanId, YEARLY_PERIOD, totalPrice, member, clock);
+            final Subscription subscription = Subscription.subscribe(subscriptionId, YEARLY_PERIOD, totalPrice, member, clock);
 
             assertThat(subscription.getSubscriptionDate()).isEqualTo(new SubscriptionDate(TODAY, IN_ONE_YEAR));
         }

@@ -9,7 +9,6 @@ import com.gym.subscription.domain.SubscriptionId;
 import com.gym.subscription.domain.SubscriptionRepository;
 import com.gym.subscription.infrastructure.InMemorySubscriptionRepository;
 import com.gym.subscription_plan.domain.Period;
-import com.gym.subscription_plan.domain.SubscriptionPlanId;
 import com.gym.subscription_plan.domain.TotalPrice;
 import org.junit.jupiter.api.Test;
 
@@ -30,21 +29,18 @@ class ApplyThirdAnniversaryDiscountUTest {
     @Test
     void execute_should_apply_discount_for_all_subscription_at_their_third_anniversary() {
         final SubscriptionRepository subscriptionRepository = new InMemorySubscriptionRepository(UUID.randomUUID());
-        final SubscriptionPlanId subscriptionPlanId = new SubscriptionPlanId(UUID.randomUUID());
         final SubscriptionId threeYearSubscriptionId = new SubscriptionId(UUID.randomUUID());
         final SubscriptionId otherSubscriptionId = new SubscriptionId(UUID.randomUUID());
         ((InMemorySubscriptionRepository) subscriptionRepository).addSubscriptions(
                 asList(
                         Subscription.subscribe(
                                 threeYearSubscriptionId,
-                                subscriptionPlanId,
                                 Period.Monthly,
                                 new TotalPrice(100d),
                                 Member.createRegular(new MemberId(UUID.randomUUID()), new Email("one@kata.com")),
                                 THREE_YEARS_AGO),
                         Subscription.subscribe(
                                 otherSubscriptionId,
-                                subscriptionPlanId,
                                 Period.Yearly,
                                 new TotalPrice(80d),
                                 Member.createRegular(new MemberId(UUID.randomUUID()), new Email("one@kata.com")),

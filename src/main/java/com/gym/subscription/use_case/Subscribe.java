@@ -26,7 +26,7 @@ public class Subscribe {
         final TotalPrice basePrice = subscriptionPlan.getTotalPrice();
         final Period period = subscriptionPlan.getPeriod();
 
-        final Subscription subscription = Subscription.subscribe(subscriptionId, subscriptionPlanId, period, basePrice, member, clock);
+        final Subscription subscription = Subscription.subscribe(subscriptionId, period, basePrice, member, clock);
 
         subscriptionRepository.save(subscription);
     }

@@ -47,7 +47,6 @@ public class SubscribeUTest {
                     .usingFieldByFieldElementComparator()
                     .containsExactly(Subscription.subscribe(
                             new SubscriptionId(fixedUUID),
-                            subscriptionPlanId,
                             Period.Monthly,
                             new TotalPrice(10d),
                             member,
