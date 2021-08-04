@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -36,8 +37,8 @@ public class ShowOnGoingSubscriptionsAmountUTest {
     public void execute_should_return_ongoing_subscriptions_for_a_given_month() {
         // given
         Subscriber subscriber = Subscriber.createStandard();
-        createSubscription(subscriber, 90d, Month.JANUARY);
-        createSubscription(subscriber, 100d, Month.JULY);
+        createSubscription(subscriber, UUID.randomUUID(), 90d, Month.JANUARY);
+        createSubscription(subscriber, UUID.randomUUID(), 100d, Month.JULY);
         final ShowOnGoingSubscriptionsAmount showOnGoingSubscriptionsAmount = new ShowOnGoingSubscriptionsAmount(subscriptionRepository);
 
         // when
@@ -48,8 +49,8 @@ public class ShowOnGoingSubscriptionsAmountUTest {
         assertThat(result).isEqualTo(expectedOngoingSubscriptions);
     }
 
-    private void createSubscription(Subscriber subscriber, double basePrice, Month month) {
-        SubscriptionPlan monthlySubscriptionPlan = new SubscriptionPlan(new BasePrice(basePrice), Period.Monthly);
+    private void createSubscription(Subscriber subscriber, UUID id, double basePrice, Month month) {
+        SubscriptionPlan monthlySubscriptionPlan = new SubscriptionPlan(id, new BasePrice(basePrice), Period.Monthly);
         LocalDate january = LocalDate.of(2021, month, 1);
         final Subscription januaryMonthlySubscription = new Subscription(monthlySubscriptionPlan, subscriber, january);
         ((InMemorySubscriptionRepository) subscriptionRepository).getSubscriptions().add(januaryMonthlySubscription);

@@ -1,12 +1,16 @@
 package com.gym.domain.subscription_plan;
 
+import java.util.UUID;
+
 public class SubscriptionPlan {
+    private final UUID id;
     private final BasePrice basePrice;
     private final Period period;
     private final DiscountRate discountRate;
     private TotalPrice totalPrice;
 
-    public SubscriptionPlan(BasePrice basePrice, Period period) {
+    public SubscriptionPlan(UUID id, BasePrice basePrice, Period period) {
+        this.id = id;
         this.basePrice = basePrice;
         this.period = period;
         this.discountRate = new DiscountRate(period);
@@ -28,5 +32,13 @@ public class SubscriptionPlan {
 
     public TotalPrice getTotalPrice() {
         return totalPrice;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void changePrice(double newPrice) {
+        this.totalPrice = new TotalPrice(newPrice);
     }
 }

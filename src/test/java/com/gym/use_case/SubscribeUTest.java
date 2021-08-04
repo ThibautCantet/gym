@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -22,7 +23,8 @@ public class SubscribeUTest {
     public void execute_should_save_new_monthly_subscription_with_20_percent_discount_when_subscriber_is_a_student() {
         SubscriptionRepository subscriptionRepository = new InMemorySubscriptionRepository();
         final Subscribe subscribe = new Subscribe(subscriptionRepository);
-        final SubscriptionPlan subscriptionPlan = new SubscriptionPlan(new BasePrice(100d), Period.Monthly);
+        UUID id = UUID.randomUUID();
+        final SubscriptionPlan subscriptionPlan = new SubscriptionPlan(id, new BasePrice(100d), Period.Monthly);
         final Subscriber subscriber = Subscriber.createStudent();
         final LocalDate date = LocalDate.now();
 
@@ -42,7 +44,8 @@ public class SubscribeUTest {
     public void execute_should_save_new_monthly_subscription_without_discount_when_subscriber_is_not_a_student() {
         SubscriptionRepository subscriptionRepository = new InMemorySubscriptionRepository();
         final Subscribe subscribe = new Subscribe(subscriptionRepository);
-        final SubscriptionPlan subscriptionPlan = new SubscriptionPlan(new BasePrice(100d), Period.Monthly);
+        UUID id = UUID.randomUUID();
+        final SubscriptionPlan subscriptionPlan = new SubscriptionPlan(id, new BasePrice(100d), Period.Monthly);
         final Subscriber subscriber = Subscriber.createStandard();
         final LocalDate date = LocalDate.now();
 
@@ -62,7 +65,8 @@ public class SubscribeUTest {
     public void execute_should_save_new_yearly_subscription_without_discount_when_subscriber_is_not_a_student() {
         SubscriptionRepository subscriptionRepository = new InMemorySubscriptionRepository();
         final Subscribe subscribe = new Subscribe(subscriptionRepository);
-        final SubscriptionPlan subscriptionPlan = new SubscriptionPlan(new BasePrice(100d), Period.Yearly);
+        UUID id = UUID.randomUUID();
+        final SubscriptionPlan subscriptionPlan = new SubscriptionPlan(id, new BasePrice(100d), Period.Yearly);
         final Subscriber subscriber = Subscriber.createStandard();
         final LocalDate date = LocalDate.now();
 

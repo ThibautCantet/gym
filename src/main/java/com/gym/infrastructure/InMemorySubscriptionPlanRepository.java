@@ -3,22 +3,33 @@ package com.gym.infrastructure;
 import com.gym.domain.subscription_plan.SubscriptionPlan;
 import com.gym.domain.subscription_plan.SubscriptionPlanRepository;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class InMemorySubscriptionPlanRepository implements SubscriptionPlanRepository {
-    private final List<SubscriptionPlan> subscriptionPlans;
+    public final Map<UUID, SubscriptionPlan> subscriptionPlans;
+    private UUID fixedId;
 
-    public InMemorySubscriptionPlanRepository() {
-        subscriptionPlans = new ArrayList<>();
+    public InMemorySubscriptionPlanRepository(UUID fixedId) {
+        this.fixedId = fixedId;
+        subscriptionPlans = new HashMap<>();
     }
 
     public List<SubscriptionPlan> getAllSubscriptionPlan() {
-        return subscriptionPlans;
+        return subscriptionPlans.values().stream().toList();
     }
 
     @Override
     public void save(SubscriptionPlan subscriptionPlan) {
-        subscriptionPlans.add(subscriptionPlan);
+        subscriptionPlans.put(subscriptionPlan.getId(), subscriptionPlan);
+    }
+
+    @Override
+    public UUID next() {
+        return fixedId;
+    }
+
+    @Override
+    public SubscriptionPlan findById(UUID id) {
+        return subscriptionPlans.get(id);
     }
 }

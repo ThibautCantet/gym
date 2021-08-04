@@ -5,6 +5,8 @@ import com.gym.domain.subscription_plan.BasePrice;
 import com.gym.domain.subscription_plan.Period;
 import com.gym.domain.subscription_plan.SubscriptionPlan;
 
+import java.util.UUID;
+
 public class CreateSubscriptionPlan {
     private final SubscriptionPlanRepository subscriptionPlanRepository;
 
@@ -13,6 +15,7 @@ public class CreateSubscriptionPlan {
     }
 
     public void execute(BasePrice basePrice, Period period) {
-        subscriptionPlanRepository.save(new SubscriptionPlan(basePrice, period));
+        UUID id = subscriptionPlanRepository.next();
+        subscriptionPlanRepository.save(new SubscriptionPlan(id, basePrice, period));
     }
 }
