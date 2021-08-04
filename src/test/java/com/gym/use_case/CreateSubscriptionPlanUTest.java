@@ -22,7 +22,7 @@ public class CreateSubscriptionPlanUTest {
 
         assertThat(subscriptionPlanRepository.getAllSubscriptionPlan())
                 .usingElementComparatorIgnoringFields("discountRate")
-                .containsExactly(new SubscriptionPlan(id, basePrice, period));
+                .containsExactly(new SubscriptionPlan(new SubscriptionPlanId(id), basePrice, period));
 
         final SubscriptionPlan subscriptionPlan = subscriptionPlanRepository.getAllSubscriptionPlan().get(0);
         assertThat(subscriptionPlan.getBasePrice()).isEqualTo(basePrice);
@@ -43,7 +43,7 @@ public class CreateSubscriptionPlanUTest {
 
         assertThat(subscriptionPlanRepository.getAllSubscriptionPlan())
                 .usingElementComparatorIgnoringFields("discountRate")
-                .containsExactly(new SubscriptionPlan(id, basePrice, period));
+                .containsExactly(new SubscriptionPlan(new SubscriptionPlanId(id), basePrice, period));
 
         final SubscriptionPlan subscriptionPlan = subscriptionPlanRepository.getAllSubscriptionPlan().get(0);
         assertThat(subscriptionPlan.getBasePrice()).isEqualTo(basePrice);

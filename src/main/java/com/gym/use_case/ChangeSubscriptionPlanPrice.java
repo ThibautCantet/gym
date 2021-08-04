@@ -1,6 +1,7 @@
 package com.gym.use_case;
 
 import com.gym.domain.subscription_plan.SubscriptionPlan;
+import com.gym.domain.subscription_plan.SubscriptionPlanId;
 import com.gym.domain.subscription_plan.SubscriptionPlanRepository;
 
 import java.util.UUID;
@@ -13,7 +14,7 @@ public class ChangeSubscriptionPlanPrice {
     }
 
     public void execute(UUID id, double newPrice) {
-        SubscriptionPlan subscriptionPlanToUpdate = subscriptionPlanRepository.findById(id);
+        SubscriptionPlan subscriptionPlanToUpdate = subscriptionPlanRepository.findById(new SubscriptionPlanId(id));
 
         subscriptionPlanToUpdate.changePrice(newPrice);
 

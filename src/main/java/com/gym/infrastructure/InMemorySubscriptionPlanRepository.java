@@ -1,16 +1,17 @@
 package com.gym.infrastructure;
 
 import com.gym.domain.subscription_plan.SubscriptionPlan;
+import com.gym.domain.subscription_plan.SubscriptionPlanId;
 import com.gym.domain.subscription_plan.SubscriptionPlanRepository;
 
 import java.util.*;
 
 public class InMemorySubscriptionPlanRepository implements SubscriptionPlanRepository {
-    public final Map<UUID, SubscriptionPlan> subscriptionPlans;
-    private UUID fixedId;
+    public final Map<SubscriptionPlanId, SubscriptionPlan> subscriptionPlans;
+    private SubscriptionPlanId fixedId;
 
     public InMemorySubscriptionPlanRepository(UUID fixedId) {
-        this.fixedId = fixedId;
+        this.fixedId = new SubscriptionPlanId(fixedId);
         subscriptionPlans = new HashMap<>();
     }
 
@@ -24,12 +25,12 @@ public class InMemorySubscriptionPlanRepository implements SubscriptionPlanRepos
     }
 
     @Override
-    public UUID next() {
+    public SubscriptionPlanId next() {
         return fixedId;
     }
 
     @Override
-    public SubscriptionPlan findById(UUID id) {
+    public SubscriptionPlan findById(SubscriptionPlanId id) {
         return subscriptionPlans.get(id);
     }
 }

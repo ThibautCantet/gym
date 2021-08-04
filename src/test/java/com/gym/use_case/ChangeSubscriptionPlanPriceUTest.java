@@ -12,12 +12,12 @@ public class ChangeSubscriptionPlanPriceUTest {
     @Test
     public void execute_should_change_subscription_plan_place() {
         SubscriptionPlanRepository subscriptionPlanRepository = new InMemorySubscriptionPlanRepository(UUID.randomUUID());
-        final UUID id = subscriptionPlanRepository.next();
+        final SubscriptionPlanId id = subscriptionPlanRepository.next();
         ((InMemorySubscriptionPlanRepository) subscriptionPlanRepository).subscriptionPlans.put(id, new SubscriptionPlan(id, new BasePrice(100d), Period.Monthly));
         final ChangeSubscriptionPlanPrice changeSubscriptionPlanPrice = new ChangeSubscriptionPlanPrice(subscriptionPlanRepository);
         final double newPrice = 40d;
 
-        changeSubscriptionPlanPrice.execute(id, newPrice);
+        changeSubscriptionPlanPrice.execute(UUID.fromString(id.toString()), newPrice);
 
         assertThat(((InMemorySubscriptionPlanRepository) subscriptionPlanRepository).getAllSubscriptionPlan().get(0).getTotalPrice()).isEqualTo(new TotalPrice(40d));
     }

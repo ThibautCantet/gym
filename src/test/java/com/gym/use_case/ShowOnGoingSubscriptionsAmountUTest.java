@@ -6,6 +6,7 @@ import com.gym.domain.subscriber.SubscriptionRepository;
 import com.gym.domain.subscription_plan.BasePrice;
 import com.gym.domain.subscription_plan.Period;
 import com.gym.domain.subscription_plan.SubscriptionPlan;
+import com.gym.domain.subscription_plan.SubscriptionPlanId;
 import com.gym.infrastructure.InMemorySubscriptionRepository;
 import org.junit.Test;
 
@@ -50,7 +51,7 @@ public class ShowOnGoingSubscriptionsAmountUTest {
     }
 
     private void createSubscription(Subscriber subscriber, UUID id, double basePrice, Month month) {
-        SubscriptionPlan monthlySubscriptionPlan = new SubscriptionPlan(id, new BasePrice(basePrice), Period.Monthly);
+        SubscriptionPlan monthlySubscriptionPlan = new SubscriptionPlan(new SubscriptionPlanId(id), new BasePrice(basePrice), Period.Monthly);
         LocalDate january = LocalDate.of(2021, month, 1);
         final Subscription januaryMonthlySubscription = new Subscription(monthlySubscriptionPlan, subscriber, january);
         ((InMemorySubscriptionRepository) subscriptionRepository).getSubscriptions().add(januaryMonthlySubscription);

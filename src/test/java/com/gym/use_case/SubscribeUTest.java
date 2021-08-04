@@ -4,10 +4,7 @@ import com.gym.domain.subscriber.Price;
 import com.gym.domain.subscriber.Subscriber;
 import com.gym.domain.subscriber.Subscription;
 import com.gym.domain.subscriber.SubscriptionRepository;
-import com.gym.domain.subscription_plan.BasePrice;
-import com.gym.domain.subscription_plan.DiscountRate;
-import com.gym.domain.subscription_plan.Period;
-import com.gym.domain.subscription_plan.SubscriptionPlan;
+import com.gym.domain.subscription_plan.*;
 import com.gym.infrastructure.InMemorySubscriptionRepository;
 import org.junit.Test;
 
@@ -24,7 +21,7 @@ public class SubscribeUTest {
         SubscriptionRepository subscriptionRepository = new InMemorySubscriptionRepository();
         final Subscribe subscribe = new Subscribe(subscriptionRepository);
         UUID id = UUID.randomUUID();
-        final SubscriptionPlan subscriptionPlan = new SubscriptionPlan(id, new BasePrice(100d), Period.Monthly);
+        final SubscriptionPlan subscriptionPlan = new SubscriptionPlan(new SubscriptionPlanId(id), new BasePrice(100d), Period.Monthly);
         final Subscriber subscriber = Subscriber.createStudent();
         final LocalDate date = LocalDate.now();
 
@@ -45,7 +42,7 @@ public class SubscribeUTest {
         SubscriptionRepository subscriptionRepository = new InMemorySubscriptionRepository();
         final Subscribe subscribe = new Subscribe(subscriptionRepository);
         UUID id = UUID.randomUUID();
-        final SubscriptionPlan subscriptionPlan = new SubscriptionPlan(id, new BasePrice(100d), Period.Monthly);
+        final SubscriptionPlan subscriptionPlan = new SubscriptionPlan(new SubscriptionPlanId(id), new BasePrice(100d), Period.Monthly);
         final Subscriber subscriber = Subscriber.createStandard();
         final LocalDate date = LocalDate.now();
 
@@ -66,7 +63,7 @@ public class SubscribeUTest {
         SubscriptionRepository subscriptionRepository = new InMemorySubscriptionRepository();
         final Subscribe subscribe = new Subscribe(subscriptionRepository);
         UUID id = UUID.randomUUID();
-        final SubscriptionPlan subscriptionPlan = new SubscriptionPlan(id, new BasePrice(100d), Period.Yearly);
+        final SubscriptionPlan subscriptionPlan = new SubscriptionPlan(new SubscriptionPlanId(id), new BasePrice(100d), Period.Yearly);
         final Subscriber subscriber = Subscriber.createStandard();
         final LocalDate date = LocalDate.now();
 
