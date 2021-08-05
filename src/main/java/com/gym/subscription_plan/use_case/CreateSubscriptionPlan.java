@@ -1,15 +1,21 @@
 package com.gym.subscription_plan.use_case;
 
 import com.gym.subscription_plan.domain.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
+@Service
 public class CreateSubscriptionPlan {
     private final SubscriptionPlanRepository subscriptionPlanRepository;
 
+    @Autowired
     public CreateSubscriptionPlan(SubscriptionPlanRepository subscriptionPlanRepository) {
         this.subscriptionPlanRepository = subscriptionPlanRepository;
     }
 
-    public void handle(CreateSubscriptionPlanCommand createSubscriptionPlanCommand) {
+    public UUID handle(CreateSubscriptionPlanCommand createSubscriptionPlanCommand) {
         final SubscriptionPlanId subscriptionPlanId = subscriptionPlanRepository.next();
 
         SubscriptionPlan subscriptionPlan;
@@ -20,5 +26,6 @@ public class CreateSubscriptionPlan {
         }
 
         subscriptionPlanRepository.save(subscriptionPlan);
+        return subscriptionPlanId.uuid();
     }
 }
