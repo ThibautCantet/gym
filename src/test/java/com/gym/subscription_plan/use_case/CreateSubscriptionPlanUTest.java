@@ -4,7 +4,7 @@ import com.gym.subscription_plan.domain.Period;
 import com.gym.subscription_plan.domain.SubscriptionPlan;
 import com.gym.subscription_plan.domain.SubscriptionPlanId;
 import com.gym.subscription_plan.infrastructure.*;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
