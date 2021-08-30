@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.gym.subscription_plan.domain.Period;
-import com.gym.subscription_plan.infrastructure.controller.SubscriptionPlanController;
 import com.gym.subscription_plan.use_case.CreateSubscriptionPlan;
 import com.gym.subscription_plan.use_case.CreateSubscriptionPlanCommand;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,9 +29,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(SubscriptionPlanController.class)
 public class SubscriptionPlanControllerITest {
-
-    @Autowired
-    private SubscriptionPlanController subscriptionPlanController;
 
     @Autowired
     private MockMvc mockMvc;
