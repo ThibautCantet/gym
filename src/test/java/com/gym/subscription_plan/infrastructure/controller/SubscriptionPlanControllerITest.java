@@ -7,12 +7,13 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.gym.subscription_plan.domain.Period;
 import com.gym.subscription_plan.use_case.CreateSubscriptionPlan;
 import com.gym.subscription_plan.use_case.CreateSubscriptionPlanCommand;
+import com.gym.subscription_plan.use_case.GetSubscriptionPlan;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -33,8 +34,12 @@ public class SubscriptionPlanControllerITest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Mock
+    @MockBean
     private CreateSubscriptionPlan createSubscriptionPlan;
+
+    @MockBean
+    private GetSubscriptionPlan getSubscriptionPlan;
+
     private UUID fixedUUID;
 
     @BeforeEach
@@ -50,7 +55,7 @@ public class SubscriptionPlanControllerITest {
                 .content(toJson(new CreateSubscriptionPlanCommand(100d, Period.Yearly))));
 
         resultActions.andExpect(status().isOk())
-                .andExpect(content().string(fixedUUID.toString()));
+                .andExpect(content().string("\"" + fixedUUID.toString() + "\""));
 
     }
 
