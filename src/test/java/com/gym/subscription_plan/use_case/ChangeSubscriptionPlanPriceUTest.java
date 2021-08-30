@@ -4,11 +4,37 @@ import com.gym.subscription_plan.domain.*;
 import com.gym.subscription_plan.infrastructure.*;
 import org.junit.jupiter.api.Test;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ChangeSubscriptionPlanPriceUTest {
+
+    @Test
+    void handle_should_return_empty_when_no_matching_subscriptionPlan_to_update() {
+        final SubscriptionPlanRepository subscriptionPlanRepository = new InMemorySubscriptionPlanRepository(UUID.randomUUID());
+        final String subscriptionPlanId = UUID.randomUUID().toString();
+        final ChangeSubscriptionPlanPrice changeSubscriptionPlanPrice = new ChangeSubscriptionPlanPrice(subscriptionPlanRepository);
+        final ChangeSubscriptionPlanPriceCommand changeSubscriptionPlanPriceCommand = new ChangeSubscriptionPlanPriceCommand(subscriptionPlanId, 100d);
+
+        final Optional<SubscriptionPlanId> result = changeSubscriptionPlanPrice.handle(changeSubscriptionPlanPriceCommand);
+
+        assertThat(result).isEmpty();
+    }
+
+    @Test
+    void handle_should_return_subscriptionPlanId_when_existing_subscriptionPlan_to_update() {
+        final SubscriptionPlanRepository subscriptionPlanRepository = new InMemorySubscriptionPlanRepository(UUID.randomUUID());
+        final String subscriptionPlanId = UUID.randomUUID().toString();
+        ((InMemorySubscriptionPlanRepository) subscriptionPlanRepository).add(SubscriptionPlan.createMonthly(new SubscriptionPlanId(subscriptionPlanId), 90d));
+        final ChangeSubscriptionPlanPrice changeSubscriptionPlanPrice = new ChangeSubscriptionPlanPrice(subscriptionPlanRepository);
+        final ChangeSubscriptionPlanPriceCommand changeSubscriptionPlanPriceCommand = new ChangeSubscriptionPlanPriceCommand(subscriptionPlanId, 100d);
+
+        final Optional<SubscriptionPlanId> result = changeSubscriptionPlanPrice.handle(changeSubscriptionPlanPriceCommand);
+
+        assertThat(result.get()).isEqualTo(new SubscriptionPlanId(subscriptionPlanId));
+    }
 
     @Test
     void handle_should_change_subscriptionPlan_price_when_monthly_plan() {

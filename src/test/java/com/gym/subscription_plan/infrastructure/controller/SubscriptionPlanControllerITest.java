@@ -21,6 +21,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -43,6 +44,9 @@ public class SubscriptionPlanControllerITest {
 
     @MockBean
     private GetAllSubscriptionPlans getAllSubscriptionPlans;
+
+    @MockBean
+    private ChangeSubscriptionPlanPrice changeSubscriptionPlanPrice;
 
     private UUID fixedUUID;
 
@@ -86,6 +90,16 @@ public class SubscriptionPlanControllerITest {
                 .andExpect(content().json(
                         "[{'id':{'uuid':'912eae98-15d7-4af0-8f8e-8c687c77a41b'},'basePrice':{'amount':100.0},'period':'Monthly','discountRate':{'rate':0.0},'totalPrice':{'value':100.0}}]"
                 ));
+    }
+
+    @Test
+    void changeSubscriptionPlanPrice_should_return_200() throws Exception {
+        when(changeSubscriptionPlanPrice.handle(any())).thenReturn(Optional.of(new SubscriptionPlanId(fixedUUID)));
+        final ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/api/subscription-plan/"+ fixedUUID.toString())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(toJson(200d)));
+
+        resultActions.andExpect(status().isNoContent());
     }
 
     private String toJson(Object object) throws JsonProcessingException {

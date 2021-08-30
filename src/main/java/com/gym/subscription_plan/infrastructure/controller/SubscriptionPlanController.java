@@ -1,8 +1,8 @@
 package com.gym.subscription_plan.infrastructure.controller;
 
 import com.gym.subscription_plan.domain.SubscriptionPlan;
+import com.gym.subscription_plan.domain.SubscriptionPlanId;
 import com.gym.subscription_plan.use_case.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,8 +11,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.springframework.http.HttpStatus.NO_CONTENT;
-import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 public class SubscriptionPlanController {
@@ -20,12 +19,13 @@ public class SubscriptionPlanController {
     private final CreateSubscriptionPlan createSubscriptionPlan;
     private final GetSubscriptionPlan getSubscriptionPlan;
     private final GetAllSubscriptionPlans getAllSubscriptionPlans;
+    private final ChangeSubscriptionPlanPrice changeSubscriptionPlanPrice;
 
-    @Autowired
-    public SubscriptionPlanController(CreateSubscriptionPlan createSubscriptionPlan, GetSubscriptionPlan getSubscriptionPlan, GetAllSubscriptionPlans getAllSubscriptionPlans) {
+    public SubscriptionPlanController(CreateSubscriptionPlan createSubscriptionPlan, GetSubscriptionPlan getSubscriptionPlan, GetAllSubscriptionPlans getAllSubscriptionPlans, ChangeSubscriptionPlanPrice changeSubscriptionPlanPrice) {
         this.createSubscriptionPlan = createSubscriptionPlan;
         this.getSubscriptionPlan = getSubscriptionPlan;
         this.getAllSubscriptionPlans = getAllSubscriptionPlans;
+        this.changeSubscriptionPlanPrice = changeSubscriptionPlanPrice;
     }
 
     @PostMapping("/api/subscription-plan")
@@ -47,5 +47,14 @@ public class SubscriptionPlanController {
             return new ResponseEntity<>(NO_CONTENT);
         }
         return new ResponseEntity<>(subscriptionPlans, OK);
+    }
+
+    @PostMapping("/api/subscription-plan/{id}")
+    public ResponseEntity<Void> changeSubscriptionPlanPrice(@PathVariable("id") String id, @RequestBody double newPrice) {
+        final ChangeSubscriptionPlanPriceCommand changeSubscriptionPlanPriceCommand = new ChangeSubscriptionPlanPriceCommand(id, newPrice);
+        Optional<SubscriptionPlanId> optionalSubscriptionPlanId = changeSubscriptionPlanPrice.handle(changeSubscriptionPlanPriceCommand);
+
+        return optionalSubscriptionPlanId.map(subscriptionPlanId -> new ResponseEntity<Void>(NO_CONTENT))
+                .orElse(new ResponseEntity<>(NOT_FOUND));
     }
 }

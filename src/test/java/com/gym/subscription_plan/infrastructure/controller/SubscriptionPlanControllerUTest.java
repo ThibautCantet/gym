@@ -5,10 +5,7 @@ import com.gym.subscription_plan.domain.SubscriptionPlan;
 import com.gym.subscription_plan.domain.SubscriptionPlanId;
 import com.gym.subscription_plan.domain.SubscriptionPlanRepository;
 import com.gym.subscription_plan.infrastructure.InMemorySubscriptionPlanRepository;
-import com.gym.subscription_plan.use_case.CreateSubscriptionPlan;
-import com.gym.subscription_plan.use_case.CreateSubscriptionPlanCommand;
-import com.gym.subscription_plan.use_case.GetAllSubscriptionPlans;
-import com.gym.subscription_plan.use_case.GetSubscriptionPlan;
+import com.gym.subscription_plan.use_case.*;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
@@ -26,11 +23,13 @@ class SubscriptionPlanControllerUTest {
     private final CreateSubscriptionPlan createSubscriptionPlan = new CreateSubscriptionPlan(subscriptionPlanRepository);
     private final GetSubscriptionPlan getSubscriptionPlan = new GetSubscriptionPlan(subscriptionPlanRepository);
     private final GetAllSubscriptionPlans getAllSubscriptionPlans = new GetAllSubscriptionPlans(subscriptionPlanRepository);
-    private final SubscriptionPlanController subscriptionPlanController = new SubscriptionPlanController(createSubscriptionPlan, getSubscriptionPlan, getAllSubscriptionPlans);
-    private final CreateSubscriptionPlanCommand createSubscriptionPlanCommand = new CreateSubscriptionPlanCommand(100d, Period.Yearly);
+    private final ChangeSubscriptionPlanPrice changeSubscriptionPlanPrice = new ChangeSubscriptionPlanPrice(subscriptionPlanRepository);
+    private final SubscriptionPlanController subscriptionPlanController = new SubscriptionPlanController(createSubscriptionPlan, getSubscriptionPlan, getAllSubscriptionPlans, changeSubscriptionPlanPrice);
 
     @Nested
     class CreateSubscriptionPlanShould {
+        private final CreateSubscriptionPlanCommand createSubscriptionPlanCommand = new CreateSubscriptionPlanCommand(100d, Period.Yearly);
+
         @Test
         void return_generation_id_with_status_ok() {
             final ResponseEntity<UUID> responseEntity = subscriptionPlanController.createSubscriptionPlan(createSubscriptionPlanCommand);
@@ -93,6 +92,29 @@ class SubscriptionPlanControllerUTest {
 
             assertThat(responseEntity.getBody()).isNull();
             assertThat(responseEntity.getStatusCode()).isEqualTo(NO_CONTENT);
+        }
+    }
+
+    @Nested
+    class ChangeSubscriptionPlanPriceShould {
+        @Test
+        void return_no_content_when_existing_subscriptionPlan() {
+            final UUID fixedUUID = UUID.randomUUID();
+            final SubscriptionPlan subscriptionPlan = SubscriptionPlan.createYearly(new SubscriptionPlanId(fixedUUID), 100d);
+            ((InMemorySubscriptionPlanRepository) subscriptionPlanRepository).add(subscriptionPlan);
+
+            final ResponseEntity<Void> responseEntity = subscriptionPlanController.changeSubscriptionPlanPrice(fixedUUID.toString(), 110d);
+
+            assertThat(responseEntity.getBody()).isNull();
+            assertThat(responseEntity.getStatusCode()).isEqualTo(NO_CONTENT);
+        }
+
+        @Test
+        void return_not_found_when_no_matching_subscriptionPlan() {
+            final ResponseEntity<Void> responseEntity = subscriptionPlanController.changeSubscriptionPlanPrice(UUID.randomUUID().toString(), 110d);
+
+            assertThat(responseEntity.getBody()).isNull();
+            assertThat(responseEntity.getStatusCode()).isEqualTo(NOT_FOUND);
         }
     }
 }
