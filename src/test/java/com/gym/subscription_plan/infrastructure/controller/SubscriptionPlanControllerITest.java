@@ -5,9 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.gym.subscription_plan.domain.Period;
-import com.gym.subscription_plan.use_case.CreateSubscriptionPlan;
-import com.gym.subscription_plan.use_case.CreateSubscriptionPlanCommand;
-import com.gym.subscription_plan.use_case.GetSubscriptionPlan;
+import com.gym.subscription_plan.domain.SubscriptionPlan;
+import com.gym.subscription_plan.domain.SubscriptionPlanId;
+import com.gym.subscription_plan.use_case.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -44,19 +44,31 @@ public class SubscriptionPlanControllerITest {
 
     @BeforeEach
     void setUp() {
-        fixedUUID = UUID.randomUUID();
-        when(createSubscriptionPlan.handle(any())).thenReturn(fixedUUID);
+        fixedUUID = UUID.fromString("912eae98-15d7-4af0-8f8e-8c687c77a41b");
     }
 
     @Test
     void createSubscriptionPlan_should_return_200() throws Exception {
+        when(createSubscriptionPlan.handle(any())).thenReturn(fixedUUID);
         final ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/api/subscription-plan/")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(toJson(new CreateSubscriptionPlanCommand(100d, Period.Yearly))));
 
         resultActions.andExpect(status().isOk())
                 .andExpect(content().string("\"" + fixedUUID.toString() + "\""));
+    }
 
+    @Test
+    void findById_should_return_200_with_json() throws Exception {
+        when(getSubscriptionPlan.handle(new GetSubscriptionPlanCommand(fixedUUID.toString()))).thenReturn(java.util.Optional.of(SubscriptionPlan.createMonthly(new SubscriptionPlanId(fixedUUID), 100d)));
+        final ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.get("/api/subscription-plan/" + fixedUUID.toString())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(toJson(new CreateSubscriptionPlanCommand(100d, Period.Yearly))));
+
+        resultActions.andExpect(status().isOk())
+                .andExpect(content().json(
+                        "{'id':{'uuid':'912eae98-15d7-4af0-8f8e-8c687c77a41b'},'basePrice':{'amount':100.0},'period':'Monthly','discountRate':{'rate':0.0},'totalPrice':{'value':100.0}}"
+                ));
     }
 
     private String toJson(Object object) throws JsonProcessingException {
