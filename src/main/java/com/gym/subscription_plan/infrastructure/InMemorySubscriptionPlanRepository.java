@@ -58,4 +58,9 @@ public class InMemorySubscriptionPlanRepository implements SubscriptionPlanRepos
                 .findFirst()
                 .orElse(null);
     }
+
+    @Override
+    public List<SubscriptionPlan> findAll() {
+        return subscriptionPlans;
+    }
 }

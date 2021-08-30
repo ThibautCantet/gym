@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.List;
 import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -39,6 +40,9 @@ public class SubscriptionPlanControllerITest {
 
     @MockBean
     private GetSubscriptionPlan getSubscriptionPlan;
+
+    @MockBean
+    private GetAllSubscriptionPlans getAllSubscriptionPlans;
 
     private UUID fixedUUID;
 
@@ -68,6 +72,19 @@ public class SubscriptionPlanControllerITest {
         resultActions.andExpect(status().isOk())
                 .andExpect(content().json(
                         "{'id':{'uuid':'912eae98-15d7-4af0-8f8e-8c687c77a41b'},'basePrice':{'amount':100.0},'period':'Monthly','discountRate':{'rate':0.0},'totalPrice':{'value':100.0}}"
+                ));
+    }
+
+    @Test
+    void findAll_should_return_200_with_json() throws Exception {
+        when(getAllSubscriptionPlans.handle(any())).thenReturn(List.of(SubscriptionPlan.createMonthly(new SubscriptionPlanId(fixedUUID), 100d)));
+        final ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.get("/api/subscription-plan/")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(toJson(new CreateSubscriptionPlanCommand(100d, Period.Yearly))));
+
+        resultActions.andExpect(status().isOk())
+                .andExpect(content().json(
+                        "[{'id':{'uuid':'912eae98-15d7-4af0-8f8e-8c687c77a41b'},'basePrice':{'amount':100.0},'period':'Monthly','discountRate':{'rate':0.0},'totalPrice':{'value':100.0}}]"
                 ));
     }
 

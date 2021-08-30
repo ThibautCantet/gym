@@ -7,16 +7,17 @@ import com.gym.subscription_plan.domain.SubscriptionPlanRepository;
 import com.gym.subscription_plan.infrastructure.InMemorySubscriptionPlanRepository;
 import com.gym.subscription_plan.use_case.CreateSubscriptionPlan;
 import com.gym.subscription_plan.use_case.CreateSubscriptionPlanCommand;
+import com.gym.subscription_plan.use_case.GetAllSubscriptionPlans;
 import com.gym.subscription_plan.use_case.GetSubscriptionPlan;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.*;
 
 class SubscriptionPlanControllerUTest {
 
@@ -24,7 +25,8 @@ class SubscriptionPlanControllerUTest {
     private final SubscriptionPlanRepository subscriptionPlanRepository = new InMemorySubscriptionPlanRepository(expectedUUID);
     private final CreateSubscriptionPlan createSubscriptionPlan = new CreateSubscriptionPlan(subscriptionPlanRepository);
     private final GetSubscriptionPlan getSubscriptionPlan = new GetSubscriptionPlan(subscriptionPlanRepository);
-    private final SubscriptionPlanController subscriptionPlanController = new SubscriptionPlanController(createSubscriptionPlan, getSubscriptionPlan);
+    private final GetAllSubscriptionPlans getAllSubscriptionPlans = new GetAllSubscriptionPlans(subscriptionPlanRepository);
+    private final SubscriptionPlanController subscriptionPlanController = new SubscriptionPlanController(createSubscriptionPlan, getSubscriptionPlan, getAllSubscriptionPlans);
     private final CreateSubscriptionPlanCommand createSubscriptionPlanCommand = new CreateSubscriptionPlanCommand(100d, Period.Yearly);
 
     @Nested
@@ -68,6 +70,29 @@ class SubscriptionPlanControllerUTest {
 
             assertThat(responseEntity.getBody()).isNull();
             assertThat(responseEntity.getStatusCode()).isEqualTo(NOT_FOUND);
+        }
+    }
+
+    @Nested
+    class FindAllShould {
+        @Test
+        void return_subscriptionPlan_when_existing_subscriptionPlan() {
+            final UUID fixedUUID = UUID.randomUUID();
+            final SubscriptionPlan subscriptionPlan = SubscriptionPlan.createYearly(new SubscriptionPlanId(fixedUUID), 100d);
+            ((InMemorySubscriptionPlanRepository) subscriptionPlanRepository).add(subscriptionPlan);
+
+            final ResponseEntity<List<SubscriptionPlan>> responseEntity = subscriptionPlanController.findAll();
+
+            assertThat(responseEntity.getBody()).containsExactly(subscriptionPlan);
+            assertThat(responseEntity.getStatusCode()).isEqualTo(OK);
+        }
+
+        @Test
+        void return_empty_when_no_subscriptionPlan() {
+            final ResponseEntity<List<SubscriptionPlan>> responseEntity = subscriptionPlanController.findAll();
+
+            assertThat(responseEntity.getBody()).isNull();
+            assertThat(responseEntity.getStatusCode()).isEqualTo(NO_CONTENT);
         }
     }
 }
